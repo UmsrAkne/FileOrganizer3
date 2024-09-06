@@ -15,6 +15,7 @@ namespace FileOrganizer3.ViewModels
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
 
             FileContainer.FileInfoWrappers[1].IsMarked = true;
+            fileContainer.FileInfoWrappers[2].IsIgnored = true;
         }
 
         public TextWrapper TextWrapper { get; } = new ();

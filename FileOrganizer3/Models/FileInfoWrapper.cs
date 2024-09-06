@@ -9,6 +9,7 @@ namespace FileOrganizer3.Models
         private int index;
         private int playCount;
         private bool isMarked;
+        private bool isIgnored;
 
         public FileInfoWrapper(FileInfo fileInfo)
         {
@@ -25,7 +26,7 @@ namespace FileOrganizer3.Models
 
         public bool IsMarked { get => isMarked; set => SetProperty(ref isMarked, value); }
 
-        public bool IsIgnored { get; set; }
+        public bool IsIgnored { get => isIgnored; set => SetProperty(ref isIgnored, value); }
 
         public string TemporaryName { get; set; } = string.Empty;
 

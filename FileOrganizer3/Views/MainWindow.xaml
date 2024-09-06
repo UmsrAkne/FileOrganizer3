@@ -44,6 +44,7 @@
 
             <ListBox.InputBindings>
                 <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
+                <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
@@ -110,6 +111,10 @@
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="Border" Property="Background" Value="LightGray" />
                                     </Trigger>
+
+                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                        <Setter Property="Opacity" Value="0.4" />
+                                    </DataTrigger>
 
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

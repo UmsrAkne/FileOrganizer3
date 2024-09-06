@@ -29,6 +29,17 @@ namespace FileOrganizer3.Models
             SelectedItem.IsMarked = !SelectedItem.IsMarked;
         });
 
+        public DelegateCommand IgnoreFileCommand => new (() =>
+        {
+            if (SelectedItem == null)
+            {
+                return;
+            }
+
+            SelectedItem.IsIgnored = !SelectedItem.IsIgnored;
+            ReIndex(FileInfoWrappers);
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
