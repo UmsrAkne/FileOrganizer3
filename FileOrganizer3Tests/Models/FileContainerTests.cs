@@ -25,7 +25,7 @@ namespace FileOrganizer3Tests.Models
         }
 
         [Test]
-        public void ReIndex_AssignsSequentialIndicesToFiles()
+        public void ReIndex_AssignsSequentialIndicesToFiles_通常動作のテスト()
         {
             fileContainer.ReIndex(fileContainer.FileInfoWrappers);
 
@@ -36,6 +36,23 @@ namespace FileOrganizer3Tests.Models
             }
 
             CollectionAssert.AreEqual(new [] { 1,2,3,4,5, }, results);
+        }
+
+        [Test]
+        public void ReIndexTest_無視しているアイテムを含む()
+        {
+            fileContainer.FileInfoWrappers[0].IsIgnored = true;
+            fileContainer.FileInfoWrappers[1].IsIgnored = true;
+
+            fileContainer.ReIndex(fileContainer.FileInfoWrappers);
+
+            var results = new List<int>();
+            foreach (var w in fileContainer.FileInfoWrappers)
+            {
+                results.Add(w.Index);
+            }
+
+            CollectionAssert.AreEqual(new[] { 0, 0, 1, 2, 3, }, results);
         }
     }
 }

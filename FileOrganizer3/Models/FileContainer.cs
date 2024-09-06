@@ -22,7 +22,7 @@ namespace FileOrganizer3.Models
 
             foreach (var f in files)
             {
-                f.Index = idx++;
+                f.Index = f.IsIgnored ? 0 : idx++;
             }
         }
     }
