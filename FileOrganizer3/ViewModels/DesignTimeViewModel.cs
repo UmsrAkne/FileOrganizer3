@@ -13,6 +13,8 @@ namespace FileOrganizer3.ViewModels
         {
             FileContainer.FileInfoWrappers =
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
+
+            FileContainer.FileInfoWrappers[1].IsMarked = true;
         }
 
         public TextWrapper TextWrapper { get; } = new ();

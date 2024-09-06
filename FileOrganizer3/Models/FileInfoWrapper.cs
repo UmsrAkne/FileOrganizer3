@@ -8,6 +8,7 @@ namespace FileOrganizer3.Models
     {
         private int index;
         private int playCount;
+        private bool isMarked;
 
         public FileInfoWrapper(FileInfo fileInfo)
         {
@@ -22,7 +23,7 @@ namespace FileOrganizer3.Models
 
         public int PlayCount { get => playCount; set => SetProperty(ref playCount, value); }
 
-        public bool IsMarked { get; set; }
+        public bool IsMarked { get => isMarked; set => SetProperty(ref isMarked, value); }
 
         public bool IsIgnored { get; set; }
 

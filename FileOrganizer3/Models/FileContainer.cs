@@ -2,12 +2,32 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using Prism.Commands;
+using Prism.Mvvm;
 
 namespace FileOrganizer3.Models
 {
-    public class FileContainer
+    public class FileContainer : BindableBase
     {
+        private FileInfoWrapper selectedItem;
+
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers { get; set; } = new ();
+
+        public FileInfoWrapper SelectedItem
+        {
+            get => selectedItem;
+            set => SetProperty(ref selectedItem, value);
+        }
+
+        public DelegateCommand MarkCommand => new DelegateCommand(() =>
+        {
+            if (SelectedItem == null)
+            {
+                return;
+            }
+
+            SelectedItem.IsMarked = !SelectedItem.IsMarked;
+        });
 
         public void AddFiles(IEnumerable<string> filePaths)
         {
