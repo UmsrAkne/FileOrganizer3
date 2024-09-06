@@ -5,7 +5,7 @@ using Prism.Mvvm;
 namespace FileOrganizer3.ViewModels
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class MainWindowViewModel : BindableBase
+    public class MainWindowViewModel : BindableBase, IMainWindowViewModel
     {
         public MainWindowViewModel()
         {
