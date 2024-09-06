@@ -34,6 +34,10 @@
 
         <ListBox Grid.Row="1" ItemsSource="{Binding FileContainer.FileInfoWrappers}">
 
+            <b:Interaction.Behaviors>
+                <behaviors:ListBoxKeyDownBehavior />
+            </b:Interaction.Behaviors>
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
