@@ -1,6 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.IO;
-using FileOrganizer3.Behaviors;
 using FileOrganizer3.Models;
 using Prism.Mvvm;
 
@@ -13,13 +11,8 @@ namespace FileOrganizer3.ViewModels
 
         public DesignTimeViewModel()
         {
-            FileContainer.FileInfoWrappers = new ObservableCollection<FileInfoWrapper>()
-            {
-                new (new FileInfo("test_test_test111.mp3")),
-                new (new FileInfo("test_test_test222.mp3")),
-                new (new FileInfo("test_test_test333.mp3")),
-                new (new FileInfo("test_test_test444.mp3")),
-            };
+            FileContainer.FileInfoWrappers =
+                new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
         }
 
         public TextWrapper TextWrapper { get; } = new ();
