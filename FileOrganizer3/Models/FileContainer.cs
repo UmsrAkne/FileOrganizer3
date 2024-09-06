@@ -2,9 +2,8 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using FileOrganizer3.Models;
 
-namespace FileOrganizer3.Behaviors
+namespace FileOrganizer3.Models
 {
     public class FileContainer
     {
