@@ -32,7 +32,46 @@
             <MenuItem Header="設定" />
         </Menu>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding FileContainer.FileInfoWrappers}" />
+        <ListBox Grid.Row="1" ItemsSource="{Binding FileContainer.FileInfoWrappers}">
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Name}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border
+                                    x:Name="Border"
+                                    Background="Transparent"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="1">
+                                    <ContentPresenter />
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                                        <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue" />
+                                    </Trigger>
+
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                    </Trigger>
+
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListBox.ItemContainerStyle>
+
+        </ListBox>
 
         <ListBox Grid.Row="2" />
 
