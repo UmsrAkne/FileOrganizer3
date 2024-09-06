@@ -54,5 +54,24 @@ namespace FileOrganizer3Tests.Models
 
             CollectionAssert.AreEqual(new[] { 0, 0, 1, 2, 3, }, results);
         }
+
+        [Test]
+        public void ReIndexTest_全てのアイテムが無視状態()
+        {
+            foreach (var f in fileContainer.FileInfoWrappers)
+            {
+                f.IsIgnored = true;
+            }
+
+            fileContainer.ReIndex(fileContainer.FileInfoWrappers);
+
+            var results = new List<int>();
+            foreach (var w in fileContainer.FileInfoWrappers)
+            {
+                results.Add(w.Index);
+            }
+
+            CollectionAssert.AreEqual(new[] { 0, 0, 0, 0, 0, }, results);
+        }
     }
 }
