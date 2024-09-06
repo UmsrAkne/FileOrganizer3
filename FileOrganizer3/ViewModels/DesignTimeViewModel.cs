@@ -15,10 +15,10 @@ namespace FileOrganizer3.ViewModels
         {
             FileContainer.FileInfoWrappers = new ObservableCollection<FileInfoWrapper>()
             {
-                new (new FileInfo("test_test_test111.mp3")),
-                new (new FileInfo("test_test_test222.mp3")),
-                new (new FileInfo("test_test_test333.mp3")),
-                new (new FileInfo("test_test_test444.mp3")),
+                new (new FileInfo("test_test_test111.mp3")) { Index = 1, },
+                new (new FileInfo("test_test_test222.mp3")) { Index = 2, },
+                new (new FileInfo("test_test_test333.mp3")) { Index = 3, },
+                new (new FileInfo("test_test_test444.mp3")) { Index = 99, },
             };
         }
 

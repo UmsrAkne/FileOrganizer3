@@ -36,7 +36,20 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Name}" />
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            Grid.Column="0"
+                            Width="50"
+                            Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
+
+                        <TextBlock Grid.Column="1" Text="{Binding Name}" />
+
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
