@@ -1,4 +1,5 @@
-﻿using FileOrganizer3.Models;
+﻿using FileOrganizer3.Behaviors;
+using FileOrganizer3.Models;
 using Prism.Mvvm;
 
 namespace FileOrganizer3.ViewModels
@@ -11,5 +12,7 @@ namespace FileOrganizer3.ViewModels
         }
 
         public TextWrapper TextWrapper { get; private set; } = new ();
+
+        public FileContainer FileContainer { get; set; } = new ();
     }
 }

@@ -2,6 +2,8 @@
     x:Class="FileOrganizer3.Views.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+    xmlns:behaviors="clr-namespace:FileOrganizer3.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
@@ -11,7 +13,12 @@
     Height="350"
     d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
+    AllowDrop="True"
     mc:Ignorable="d">
+
+    <b:Interaction.Behaviors>
+        <behaviors:DragAndDropBehavior />
+    </b:Interaction.Behaviors>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -24,7 +31,8 @@
         <Menu Grid.Row="0">
             <MenuItem Header="設定" />
         </Menu>
-        <ListBox Grid.Row="1" />
+
+        <ListBox Grid.Row="1" ItemsSource="{Binding FileContainer.FileInfoWrappers}" />
 
         <ListBox Grid.Row="2" />
 
