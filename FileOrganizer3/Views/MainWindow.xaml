@@ -32,7 +32,10 @@
             <MenuItem Header="設定" />
         </Menu>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding FileContainer.FileInfoWrappers}">
+        <ListBox
+            Grid.Row="1"
+            AlternationCount="2"
+            ItemsSource="{Binding FileContainer.FileInfoWrappers}">
 
             <b:Interaction.Behaviors>
                 <behaviors:ListBoxKeyDownBehavior />
@@ -71,6 +74,10 @@
                                 </Border>
 
                                 <ControlTemplate.Triggers>
+
+                                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                        <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                                    </Trigger>
 
                                     <Trigger Property="IsSelected" Value="True">
                                         <Setter TargetName="Border" Property="Background" Value="LightBlue" />
