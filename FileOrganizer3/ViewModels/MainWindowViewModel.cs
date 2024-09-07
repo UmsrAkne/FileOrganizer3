@@ -15,6 +15,7 @@ namespace FileOrganizer3.ViewModels
         public MainWindowViewModel()
         {
             SetDummyData();
+            AppearanceManager.FontSize = AppSettings.Load().FontSize;
         }
 
         public TextWrapper TextWrapper { get; private set; } = new ();

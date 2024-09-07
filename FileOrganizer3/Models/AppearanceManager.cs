@@ -27,6 +27,10 @@ namespace FileOrganizer3.Models
             }
 
             FontSize = (double)param;
+
+            var appSettings = AppSettings.Load();
+            appSettings.FontSize = (double)param;
+            appSettings.Save();
         });
     }
 }
