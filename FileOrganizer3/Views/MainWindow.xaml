@@ -45,6 +45,7 @@
             <ListBox.InputBindings>
                 <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
                 <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
+                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
