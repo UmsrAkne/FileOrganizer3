@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using FileOrganizer3.Behaviors;
 using FileOrganizer3.Models;
 using Prism.Commands;
 using Prism.Mvvm;

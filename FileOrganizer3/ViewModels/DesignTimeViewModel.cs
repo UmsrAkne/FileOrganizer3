@@ -24,6 +24,6 @@ namespace FileOrganizer3.ViewModels
             set => SetProperty(ref fileContainer, value);
         }
 
-        public DelegateCommand PlaySoundCommand { get; }
+        public DelegateCommand PlaySoundCommand { get; } = new (() => { });
     }
 }
