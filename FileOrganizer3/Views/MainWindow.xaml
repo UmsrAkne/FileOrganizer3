@@ -45,12 +45,14 @@
             <ListBox.InputBindings>
                 <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
                 <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
+                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
@@ -78,7 +80,22 @@
                             </TextBlock.Style>
                         </TextBlock>
 
-                        <TextBlock Grid.Column="2" Text="{Binding Name}" />
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Foreground="DarkOrange" Text="▶">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Playing}" Value="False">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+                            <Border Width="0" Margin="10,0" />
+                        </StackPanel>
+
+                        <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
                     </Grid>
                 </DataTemplate>

@@ -1,5 +1,5 @@
-﻿using FileOrganizer3.Behaviors;
-using FileOrganizer3.Models;
+﻿using FileOrganizer3.Models;
+using Prism.Commands;
 
 namespace FileOrganizer3.ViewModels
 {
@@ -8,5 +8,7 @@ namespace FileOrganizer3.ViewModels
         TextWrapper TextWrapper { get; }
 
         FileContainer FileContainer { get; set; }
+
+        DelegateCommand PlaySoundCommand { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using FileOrganizer3.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace FileOrganizer3.ViewModels
@@ -22,5 +23,7 @@ namespace FileOrganizer3.ViewModels
             get => fileContainer;
             set => SetProperty(ref fileContainer, value);
         }
+
+        public DelegateCommand PlaySoundCommand { get; }
     }
 }
