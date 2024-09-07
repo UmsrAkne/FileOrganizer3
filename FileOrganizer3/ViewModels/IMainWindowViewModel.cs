@@ -9,6 +9,8 @@ namespace FileOrganizer3.ViewModels
 
         FileContainer FileContainer { get; set; }
 
+        FileContainer PlayedFileContainer { get; set; }
+
         DelegateCommand PlaySoundCommand { get; }
     }
 }

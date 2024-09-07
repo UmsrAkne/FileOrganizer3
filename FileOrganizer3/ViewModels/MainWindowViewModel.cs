@@ -21,6 +21,8 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer FileContainer { get; set; } = new ();
 
+        public FileContainer PlayedFileContainer { get; set; } = new ();
+
         /// <summary>
         /// FileContainer 上で選択されいてるアイテムがサウンドファイルかを確認した後、再生します。
         /// PlayCommand は FileContainer に宣言するのが自然ですが、履歴ウィンドウの方にも情報を送る都合上ここに宣言しています。
@@ -34,6 +36,7 @@ namespace FileOrganizer3.ViewModels
             }
 
             soundPlayer.PlayAudio(item);
+            PlayedFileContainer.AddFiles(new[] { item.FullPath, });
         });
 
         public void Dispose()

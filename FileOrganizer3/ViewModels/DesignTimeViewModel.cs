@@ -14,6 +14,9 @@ namespace FileOrganizer3.ViewModels
         {
             FileContainer.FileInfoWrappers =
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
+
+            PlayedFileContainer.FileInfoWrappers =
+                new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
         }
 
         public TextWrapper TextWrapper { get; } = new ();
@@ -23,6 +26,8 @@ namespace FileOrganizer3.ViewModels
             get => fileContainer;
             set => SetProperty(ref fileContainer, value);
         }
+
+        public FileContainer PlayedFileContainer { get; set; } = new ();
 
         public DelegateCommand PlaySoundCommand { get; } = new (() => { });
     }
