@@ -16,6 +16,9 @@ namespace FileOrganizer3.Models
                 new (new FileInfo("test_test_test555.mp3")) { Index = 5, Playing = true, },
                 new (new FileInfo("test_test_test666.mp3")) { Index = 6, },
                 new (new FileInfo("test_test_test444.mp3")) { Index = 99, },
+                new (new FileInfo("testSounds\\se1.mp3")) { Index = 100, },
+                new (new FileInfo("testSounds\\se2.ogg")) { Index = 101, },
+                new (new FileInfo("testSounds\\se3.wav")) { Index = 102, },
             };
         }
     }
