@@ -23,6 +23,8 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer PlayedFileContainer { get; set; } = new ();
 
+        public AppearanceManager AppearanceManager { get; set; } = new ();
+
         /// <summary>
         /// FileContainer 上で選択されいてるアイテムがサウンドファイルかを確認した後、再生します。
         /// PlayCommand は FileContainer に宣言するのが自然ですが、履歴ウィンドウの方にも情報を送る都合上ここに宣言しています。
