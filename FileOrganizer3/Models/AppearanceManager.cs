@@ -6,9 +6,11 @@ namespace FileOrganizer3.Models
 {
     public class AppearanceManager : BindableBase
     {
+        private double fontSize = 13.0;
+
         public Visibility HistoryListVisibility { get; set; }
 
-        public double FontSize { get; set; } = 12.0;
+        public double FontSize { get => fontSize; set => SetProperty(ref fontSize, value); }
 
         public DelegateCommand ToggleHistoryListVisibilityCommand => new DelegateCommand(() =>
         {

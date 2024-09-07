@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:prism="http://prismlibrary.com/"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
     Title="{Binding TextWrapper}"
     Width="525"
@@ -30,7 +31,25 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0">
-            <MenuItem Header="設定" />
+            <MenuItem Header="設定">
+                <MenuItem Header="フォントサイズを設定する">
+                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
+                        <MenuItem.CommandParameter>
+                            <sys:Double>17</sys:Double>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="中">
+                        <MenuItem.CommandParameter>
+                            <sys:Double>15</sys:Double>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="小">
+                        <MenuItem.CommandParameter>
+                            <sys:Double>13</sys:Double>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+                </MenuItem>
+            </MenuItem>
         </Menu>
 
         <ListBox
@@ -38,6 +57,12 @@
             AlternationCount="2"
             ItemsSource="{Binding FileContainer.FileInfoWrappers}"
             SelectedItem="{Binding FileContainer.SelectedItem}">
+
+            <ListBox.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="FontSize" Value="{Binding AppearanceManager.FontSize}" />
+                </Style>
+            </ListBox.Resources>
 
             <b:Interaction.Behaviors>
                 <behaviors:ListBoxKeyDownBehavior />
@@ -51,6 +76,12 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
+                        </Style>
+                    </DataTemplate.Resources>
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -167,6 +198,12 @@
 
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    <DataTemplate.Resources>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
+                        </Style>
+                    </DataTemplate.Resources>
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />

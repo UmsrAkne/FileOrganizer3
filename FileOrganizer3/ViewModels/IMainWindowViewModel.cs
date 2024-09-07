@@ -11,6 +11,8 @@ namespace FileOrganizer3.ViewModels
 
         FileContainer PlayedFileContainer { get; set; }
 
+        AppearanceManager AppearanceManager { get; set; }
+
         DelegateCommand PlaySoundCommand { get; }
     }
 }
