@@ -25,6 +25,7 @@ namespace FileOrganizer3.Models
             waveOut.Stop();
 
             fileInfoWrapper.PlayCount++;
+            fileInfoWrapper.Playing = true;
 
             if (PlayingFileInfoWrapper != null)
             {

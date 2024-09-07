@@ -13,7 +13,7 @@ namespace FileOrganizer3.Models
                 new (new FileInfo("test_test_test222.mp3")) { Index = 2, IsIgnored = true, },
                 new (new FileInfo("test_test_test333.mp3")) { Index = 3, IsMarked = true, },
                 new (new FileInfo("test_test_test444.mp3")) { Index = 4, IsMarked = true, IsIgnored = true, },
-                new (new FileInfo("test_test_test555.mp3")) { Index = 5, },
+                new (new FileInfo("test_test_test555.mp3")) { Index = 5, Playing = true, },
                 new (new FileInfo("test_test_test666.mp3")) { Index = 6, },
                 new (new FileInfo("test_test_test444.mp3")) { Index = 99, },
             };
