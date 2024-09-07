@@ -10,6 +10,7 @@ namespace FileOrganizer3.Models
         private int playCount;
         private bool isMarked;
         private bool isIgnored;
+        private bool playing;
 
         public FileInfoWrapper(FileInfo fileInfo)
         {
@@ -31,5 +32,11 @@ namespace FileOrganizer3.Models
         public string TemporaryName { get; set; } = string.Empty;
 
         private FileInfo FileInfo { get; set; }
+
+        public bool Playing { get => playing; set => SetProperty(ref playing, value); }
+
+        public string FullPath => FileInfo.FullName;
+
+        public string Extension => FileInfo.Extension;
     }
 }
