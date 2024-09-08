@@ -43,7 +43,7 @@ namespace FileOrganizer3.Models
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
-            FileInfoWrappers.AddRange(fileInfos.Select(f => new FileInfoWrapper(f)));
+            FileInfoWrappers.AddRange(fileInfos.Select(f => new FileInfoWrapper(f, null)));
             ReIndex(FileInfoWrappers);
         }
 

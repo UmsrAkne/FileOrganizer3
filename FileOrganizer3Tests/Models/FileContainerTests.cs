@@ -15,11 +15,11 @@ namespace FileOrganizer3Tests.Models
             {
                 FileInfoWrappers = new ObservableCollection<FileInfoWrapper>()
                 {
-                    new FileInfoWrapper(new FileInfo("test01.mp3")) {Index = 0, },
-                    new FileInfoWrapper(new FileInfo("test02.mp3")) {Index = 1, },
-                    new FileInfoWrapper(new FileInfo("test03.mp3")) {Index = 2, },
-                    new FileInfoWrapper(new FileInfo("test04.mp3")) {Index = 3, },
-                    new FileInfoWrapper(new FileInfo("test05.mp3")) {Index = 4, },
+                    new FileInfoWrapper(new FileInfo("test01.mp3"), null) {Index = 0, },
+                    new FileInfoWrapper(new FileInfo("test02.mp3"), null) {Index = 1, },
+                    new FileInfoWrapper(new FileInfo("test03.mp3"), null) {Index = 2, },
+                    new FileInfoWrapper(new FileInfo("test04.mp3"), null) {Index = 3, },
+                    new FileInfoWrapper(new FileInfo("test05.mp3"), null) {Index = 4, },
                 },
             };
         }
