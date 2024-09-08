@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using FileOrganizer3.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 
 namespace FileOrganizer3.ViewModels
@@ -13,6 +14,9 @@ namespace FileOrganizer3.ViewModels
         {
             FileContainer.FileInfoWrappers =
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
+
+            PlayedFileContainer.FileInfoWrappers =
+                new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
         }
 
         public TextWrapper TextWrapper { get; } = new ();
@@ -22,5 +26,11 @@ namespace FileOrganizer3.ViewModels
             get => fileContainer;
             set => SetProperty(ref fileContainer, value);
         }
+
+        public FileContainer PlayedFileContainer { get; set; } = new ();
+
+        public AppearanceManager AppearanceManager { get; set; } = new ();
+
+        public DelegateCommand PlaySoundCommand { get; } = new (() => { });
     }
 }
