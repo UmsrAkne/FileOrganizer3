@@ -30,27 +30,38 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0">
-            <MenuItem Header="設定">
-                <MenuItem Header="フォントサイズを設定する">
-                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
-                        <MenuItem.CommandParameter>
-                            <sys:Double>17</sys:Double>
-                        </MenuItem.CommandParameter>
-                    </MenuItem>
-                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="中">
-                        <MenuItem.CommandParameter>
-                            <sys:Double>15</sys:Double>
-                        </MenuItem.CommandParameter>
-                    </MenuItem>
-                    <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="小">
-                        <MenuItem.CommandParameter>
-                            <sys:Double>13</sys:Double>
-                        </MenuItem.CommandParameter>
+        <StackPanel Grid.Row="0">
+            <Menu>
+                <MenuItem Header="設定">
+                    <MenuItem Header="フォントサイズを設定する">
+                        <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
+                            <MenuItem.CommandParameter>
+                                <sys:Double>17</sys:Double>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="中">
+                            <MenuItem.CommandParameter>
+                                <sys:Double>15</sys:Double>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
+                        <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="小">
+                            <MenuItem.CommandParameter>
+                                <sys:Double>13</sys:Double>
+                            </MenuItem.CommandParameter>
+                        </MenuItem>
                     </MenuItem>
                 </MenuItem>
-            </MenuItem>
-        </Menu>
+            </Menu>
+
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="開始番号 :" />
+                <TextBox
+                    Width="50"
+                    Margin="3,0"
+                    Text="{Binding FileContainer.StartIndex}" />
+            </StackPanel>
+
+        </StackPanel>
 
         <ListBox
             Grid.Row="1"
