@@ -11,7 +11,7 @@ namespace FileOrganizer3.Models
             {
                 new (new FileInfo("test_test_test111.mp3"), null) { Index = 1, },
                 new (new FileInfo("test_test_test222.mp3"), null) { Index = 2, IsIgnored = true, },
-                new (new FileInfo("test_test_test333.mp3"), null) { Index = 3, IsMarked = true, },
+                new (new FileInfo("test_test_test333.mp3"), null) { Index = 3, IsMarked = true, TemporaryName = "TempName.mp3", },
                 new (new FileInfo("test_test_test444.mp3"), null) { Index = 4, IsMarked = true, IsIgnored = true, },
                 new (new FileInfo("test_test_test555.mp3"), null) { Index = 5, Playing = true, },
                 new (new FileInfo("test_test_test666.mp3"), null) { Index = 6, },
