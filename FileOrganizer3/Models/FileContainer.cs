@@ -10,6 +10,7 @@ namespace FileOrganizer3.Models
     public class FileContainer : BindableBase
     {
         private FileInfoWrapper selectedItem;
+        private int startIndex = 1;
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers { get; set; } = new ();
 
@@ -17,6 +18,18 @@ namespace FileOrganizer3.Models
         {
             get => selectedItem;
             set => SetProperty(ref selectedItem, value);
+        }
+
+        public int StartIndex
+        {
+            get => startIndex;
+            set
+            {
+                if (SetProperty(ref startIndex, value))
+                {
+                    ReIndex(FileInfoWrappers);
+                }
+            }
         }
 
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
@@ -49,7 +62,7 @@ namespace FileOrganizer3.Models
 
         public void ReIndex(IEnumerable<FileInfoWrapper> files)
         {
-            var idx = 1;
+            var idx = StartIndex;
 
             foreach (var f in files)
             {
