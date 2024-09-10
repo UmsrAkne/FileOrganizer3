@@ -12,7 +12,7 @@
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
     Title="{Binding TextWrapper}"
     Width="525"
-    Height="350"
+    Height="500"
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
