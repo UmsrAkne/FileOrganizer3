@@ -6,12 +6,13 @@
     xmlns:behaviors="clr-namespace:FileOrganizer3.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:FileOrganizer3.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
     Title="{Binding TextWrapper}"
     Width="525"
-    Height="350"
+    Height="500"
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
@@ -32,6 +33,50 @@
 
         <StackPanel Grid.Row="0">
             <Menu>
+                <MenuItem Header="機能">
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにプレフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True" Text="marked">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにサフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False" Text="marked">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにプレフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True" Text="ignored">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Ignored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにサフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False" Text="ignored">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Ignored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
+
+                </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
                         <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
@@ -53,13 +98,31 @@
                 </MenuItem>
             </Menu>
 
-            <StackPanel Margin="5" Orientation="Horizontal">
-                <TextBlock Text="開始番号 :" />
-                <TextBox
-                    Width="50"
-                    Margin="3,0"
-                    Text="{Binding FileContainer.StartIndex}" />
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackPanel
+                    Grid.Column="0"
+                    Margin="5"
+                    Orientation="Horizontal">
+                    <TextBlock Text="開始番号 :" />
+
+                    <TextBox
+                        Width="50"
+                        Margin="3,0"
+                        Text="{Binding FileContainer.StartIndex}" />
+                </StackPanel>
+
+                <Button
+                    Grid.Column="1"
+                    Width="100"
+                    Margin="4,2"
+                    HorizontalAlignment="Right"
+                    Command="{Binding FileContainer.RenameCommand}"
+                    Content="Rename" />
+            </Grid>
 
         </StackPanel>
 
@@ -99,7 +162,6 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
 
@@ -142,13 +204,11 @@
 
                         <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
-                        <Border
+                        <TextBox
                             Grid.Column="4"
-                            Width="1"
-                            Margin="5,0"
-                            Background="DimGray" />
-
-                        <TextBlock Grid.Column="5" Text="{Binding TemporaryName}" />
+                            Margin="0,1"
+                            Opacity="0.8"
+                            Text="{Binding TemporaryName}" />
 
                     </Grid>
                 </DataTemplate>

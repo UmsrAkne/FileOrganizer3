@@ -71,7 +71,7 @@ namespace FileOrganizer3.Models
 
         /// <summary>
         /// 格納されている FileInfo が指しているファイルの名前を変更します。
-        /// TemporaryName が null や空文字の場合は動作しません。
+        /// TemporaryName が null や空文字の場合、また、変更先のファイル名が既に存在する場合も動作せず終了します。
         /// </summary>
         public void Rename()
         {
@@ -82,6 +82,11 @@ namespace FileOrganizer3.Models
 
             var parentDirectoryPath = FileInfo.Directory?.FullName;
             var destPath = $"{parentDirectoryPath}\\{TemporaryName}";
+            if (File.Exists(destPath))
+            {
+                return;
+            }
+
             FileInfo.MoveTo(destPath);
             FileInfo = new System.IO.Abstractions.FileInfoWrapper(fileSystem, new FileInfo(destPath));
             TemporaryName = string.Empty;

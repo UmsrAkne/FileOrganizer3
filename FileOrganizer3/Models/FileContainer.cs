@@ -53,10 +53,61 @@ namespace FileOrganizer3.Models
             ReIndex(FileInfoWrappers);
         });
 
+        public DelegateCommand<RenameOption> AppendTextToNameCommand => new DelegateCommand<RenameOption>((option) =>
+        {
+            if (option == null)
+            {
+                return;
+            }
+
+            var files = ExtractFiles(FileInfoWrappers, option.ExtractOption).ToList();
+            foreach (var fb in files.Where(f => f.TemporaryName == string.Empty))
+            {
+                fb.TemporaryName = Path.GetFileNameWithoutExtension(fb.Name);
+            }
+
+            if (option.IsPrefix)
+            {
+                foreach (var f in files)
+                {
+                    f.TemporaryName = $"{option.Text}_{f.TemporaryName}";
+                }
+
+                return;
+            }
+
+            foreach (var f in files)
+            {
+                f.TemporaryName = $"{f.TemporaryName}_{option.Text}";
+            }
+        });
+
+        /// <summary>
+        /// `FileInfoWrappers` の中で、TemporaryName が設定されているファイルをリネームします。
+        /// </summary>
+        public DelegateCommand RenameCommand => new DelegateCommand(() =>
+        {
+            var files = FileInfoWrappers.Where(f =>
+                !string.IsNullOrWhiteSpace(f.TemporaryName)
+                && f.TemporaryName != Path.GetFileNameWithoutExtension(f.Name));
+
+            foreach (var fileInfoWrapper in files)
+            {
+                fileInfoWrapper.TemporaryName = $"{fileInfoWrapper.TemporaryName}{fileInfoWrapper.Extension}";
+                fileInfoWrapper.Rename();
+            }
+        });
+
+        public DelegateCommand ClearFilesCommand => new DelegateCommand(() =>
+        {
+            FileInfoWrappers.Clear();
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
-            FileInfoWrappers.AddRange(fileInfos.Select(f => new FileInfoWrapper(f, null)));
+            FileInfoWrappers.AddRange(fileInfos.Select(f => new FileInfoWrapper(f)).OrderBy(f => f.Name));
+
             ReIndex(FileInfoWrappers);
         }
 
@@ -67,6 +118,21 @@ namespace FileOrganizer3.Models
             foreach (var f in files)
             {
                 f.Index = f.IsIgnored ? 0 : idx++;
+            }
+        }
+
+        private IEnumerable<FileInfoWrapper> ExtractFiles(IEnumerable<FileInfoWrapper> files, ExtractOption option)
+        {
+            switch (option)
+            {
+                case ExtractOption.All:
+                    return files;
+                case ExtractOption.Marked:
+                    return files.Where(f => f.IsMarked && !f.IsIgnored);
+                case ExtractOption.Ignored:
+                    return files.Where(f => f.IsIgnored);
+                default:
+                    return files;
             }
         }
     }
