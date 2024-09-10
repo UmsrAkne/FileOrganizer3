@@ -54,6 +54,26 @@
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにプレフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True" Text="ignored">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Ignored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにサフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False" Text="ignored">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Ignored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
                 </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
