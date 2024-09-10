@@ -6,6 +6,7 @@
     xmlns:behaviors="clr-namespace:FileOrganizer3.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:FileOrganizer3.Models"
     xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
@@ -32,6 +33,28 @@
 
         <StackPanel Grid.Row="0">
             <Menu>
+                <MenuItem Header="機能">
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにプレフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True" Text="marked">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにサフィックス">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False" Text="marked">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
                         <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
