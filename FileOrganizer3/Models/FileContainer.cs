@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Windows.Documents;
 using Prism.Commands;
 using Prism.Mvvm;
 
@@ -80,6 +79,22 @@ namespace FileOrganizer3.Models
             foreach (var f in files)
             {
                 f.TemporaryName = $"{f.TemporaryName}_{option.Text}";
+            }
+        });
+
+        /// <summary>
+        /// `FileInfoWrappers` の中で、TemporaryName が設定されているファイルをリネームします。
+        /// </summary>
+        public DelegateCommand RenameCommand => new DelegateCommand(() =>
+        {
+            var files = FileInfoWrappers.Where(f =>
+                !string.IsNullOrWhiteSpace(f.TemporaryName)
+                && f.TemporaryName != Path.GetFileNameWithoutExtension(f.Name));
+
+            foreach (var fileInfoWrapper in files)
+            {
+                fileInfoWrapper.TemporaryName = $"{fileInfoWrapper.TemporaryName}{fileInfoWrapper.Extension}";
+                fileInfoWrapper.Rename();
             }
         });
 
