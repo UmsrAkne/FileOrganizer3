@@ -98,6 +98,11 @@ namespace FileOrganizer3.Models
             }
         });
 
+        public DelegateCommand ClearFilesCommand => new DelegateCommand(() =>
+        {
+            FileInfoWrappers.Clear();
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));

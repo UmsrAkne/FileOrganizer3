@@ -74,6 +74,8 @@
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
+                    <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
+
                 </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
