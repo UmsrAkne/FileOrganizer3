@@ -74,6 +74,47 @@
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
+                    <MenuItem Command="{Binding FileContainer.AppendNumberToNameCommand}" Header="連番をつける（プレフィックス）">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>NonIgnored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendNumberToNameCommand}" Header="連番をつける（サフィックス）">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>NonIgnored</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendNumberToNameCommand}" Header="マークファイルに連番（プレフィックス）">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="True">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+                    <MenuItem Command="{Binding FileContainer.AppendNumberToNameCommand}" Header="マークファイルに連番（サフィックス）">
+                        <MenuItem.CommandParameter>
+                            <models:RenameOption IsPrefix="False">
+                                <models:RenameOption.ExtractOption>
+                                    <models:ExtractOption>Marked</models:ExtractOption>
+                                </models:RenameOption.ExtractOption>
+                            </models:RenameOption>
+                        </MenuItem.CommandParameter>
+                    </MenuItem>
+
+
                     <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
 
                 </MenuItem>
