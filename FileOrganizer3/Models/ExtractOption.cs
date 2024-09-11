@@ -16,5 +16,10 @@
         /// `IsMarked` が `true` のアイテムを対象にします。ただし、 `IsIgnored` が true のアイテムは対象外です。
         /// </summary>
         Marked,
+
+        /// <summary>
+        /// "IsIgnored" が false の全てのアイテムを対象にします。
+        /// </summary>
+        NonIgnored,
     }
 }
