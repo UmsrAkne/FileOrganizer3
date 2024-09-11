@@ -27,6 +27,7 @@ namespace FileOrganizer3.Behaviors
             var listBox = sender as ListBox;
 
             var isShiftPressed = (Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift;
+            var isControlPressed = (Keyboard.Modifiers & ModifierKeys.Control) == ModifierKeys.Control;
 
             if (listBox == null)
             {
@@ -77,6 +78,19 @@ namespace FileOrganizer3.Behaviors
                     if (listBox.SelectedIndex - 1 >= 0)
                     {
                         listBox.SelectedIndex--;
+                    }
+
+                    break;
+
+                case Key.Delete:
+                    if (isControlPressed && listBox.SelectedIndex >= 0)
+                    {
+                        var index = listBox.SelectedIndex;
+                        if (listBox.ItemsSource is ObservableCollection<FileInfoWrapper> items)
+                        {
+                            items.RemoveAt(index);
+                            vm?.ReIndex(items);
+                        }
                     }
 
                     break;
