@@ -3,7 +3,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using FileOrganizer3.Models;
 using FileOrganizer3.ViewModels;
-using ImTools;
 using Microsoft.Xaml.Behaviors;
 
 namespace FileOrganizer3.Behaviors
