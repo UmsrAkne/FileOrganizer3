@@ -34,7 +34,7 @@ namespace FileOrganizer3.Models
         [Conditional("RELEASE")]
         private void SetVersion()
         {
-            Version = "20240910" + "a";
+            Version = "20240912" + "a";
         }
 
         [Conditional("DEBUG")]
