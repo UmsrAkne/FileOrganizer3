@@ -82,6 +82,30 @@ namespace FileOrganizer3.Models
             }
         });
 
+        public DelegateCommand<RenameOption> AppendNumberToNameCommand => new DelegateCommand<RenameOption>((option) =>
+        {
+            if (option == null)
+            {
+                return;
+            }
+
+            var files = ExtractFiles(FileInfoWrappers, option.ExtractOption).ToList();
+            foreach (var fb in files.Where(f => f.TemporaryName == string.Empty))
+            {
+                fb.TemporaryName = Path.GetFileNameWithoutExtension(fb.Name);
+            }
+
+            for (var i = 0; i < files.Count; i++)
+            {
+                var f = files[i];
+                var num = (i + StartIndex).ToString("D5");
+
+                files[i].TemporaryName = option.IsPrefix
+                    ? $"{num}_{f.TemporaryName}"
+                    : $"{f.TemporaryName}_{num}";
+            }
+        });
+
         /// <summary>
         /// `FileInfoWrappers` の中で、TemporaryName が設定されているファイルをリネームします。
         /// </summary>
