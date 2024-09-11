@@ -131,6 +131,8 @@ namespace FileOrganizer3.Models
                     return files.Where(f => f.IsMarked && !f.IsIgnored);
                 case ExtractOption.Ignored:
                     return files.Where(f => f.IsIgnored);
+                case ExtractOption.NonIgnored:
+                    return files.Where(f => !f.IsIgnored);
                 default:
                     return files;
             }
