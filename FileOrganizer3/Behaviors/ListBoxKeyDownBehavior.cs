@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using FileOrganizer3.Models;
@@ -84,6 +85,25 @@ namespace FileOrganizer3.Behaviors
                     if (listBox.SelectedIndex - 1 >= 0)
                     {
                         listBox.SelectedIndex--;
+                    }
+
+                    break;
+
+                case Key.N:
+                    var list = listBox.ItemsSource.OfType<FileInfoWrapper>().ToList();
+                    if (!list.Any(f => f.IsMarked))
+                    {
+                        break;
+                    }
+
+                    var part = list.Skip(listBox.SelectedIndex + 1).ToList();
+                    if (part.Any(f => f.IsMarked))
+                    {
+                        listBox.SelectedIndex += part.FindIndex(f => f.IsMarked) + 1;
+                    }
+                    else
+                    {
+                        listBox.SelectedIndex = list.FindIndex(f => f.IsMarked);
                     }
 
                     break;
