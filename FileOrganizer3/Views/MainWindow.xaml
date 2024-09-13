@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="{Binding AppearanceManager.HistoryPanelHeight, Mode=TwoWay}" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -117,6 +117,9 @@
 
                     <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
 
+                </MenuItem>
+                <MenuItem Header="表示">
+                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ" />
                 </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
@@ -323,7 +326,8 @@
             Grid.Row="3"
             AlternationCount="2"
             ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
-            SelectedItem="{Binding FileContainer.SelectedItem}">
+            SelectedItem="{Binding FileContainer.SelectedItem}"
+            Visibility="{Binding AppearanceManager.HistoryListVisibility}">
 
             <b:Interaction.Behaviors>
                 <behaviors:ListBoxKeyDownBehavior />
