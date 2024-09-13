@@ -37,6 +37,13 @@ namespace FileOrganizer3.Behaviors
 
             switch (e.Key)
             {
+                case Key.G:
+                    if (listBox.Items.Count != 0)
+                    {
+                        listBox.SelectedIndex = isShiftPressed ? listBox.Items.Count - 1 : 0;
+                    }
+
+                    break;
                 case Key.J:
                     if (isShiftPressed && listBox.SelectedIndex < listBox.Items.Count - 1)
                     {
