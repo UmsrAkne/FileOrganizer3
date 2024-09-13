@@ -204,6 +204,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -250,6 +251,22 @@
                             Margin="0,1"
                             Opacity="0.8"
                             Text="{Binding TemporaryName}" />
+
+                        <TextBlock
+                            Grid.Column="5"
+                            Width="40"
+                            Padding="8,0,0,0"
+                            Text="{Binding PlayCount}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PlayCount}" Value="0">
+                                            <Setter Property="Foreground" Value="DarkGray" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
                     </Grid>
                 </DataTemplate>
