@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
             <RowDefinition Height="Auto" />
-            <RowDefinition />
+            <RowDefinition Height="{Binding AppearanceManager.HistoryPanelHeight, Mode=TwoWay}" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
@@ -118,6 +118,9 @@
                     <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
 
                 </MenuItem>
+                <MenuItem Header="表示">
+                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ" />
+                </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
                         <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
@@ -204,6 +207,7 @@
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <TextBlock
@@ -250,6 +254,22 @@
                             Margin="0,1"
                             Opacity="0.8"
                             Text="{Binding TemporaryName}" />
+
+                        <TextBlock
+                            Grid.Column="5"
+                            Width="40"
+                            Padding="8,0,0,0"
+                            Text="{Binding PlayCount}">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding PlayCount}" Value="0">
+                                            <Setter Property="Foreground" Value="DarkGray" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
 
                     </Grid>
                 </DataTemplate>
@@ -306,7 +326,8 @@
             Grid.Row="3"
             AlternationCount="2"
             ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
-            SelectedItem="{Binding FileContainer.SelectedItem}">
+            SelectedItem="{Binding FileContainer.SelectedItem}"
+            Visibility="{Binding AppearanceManager.HistoryListVisibility}">
 
             <b:Interaction.Behaviors>
                 <behaviors:ListBoxKeyDownBehavior />
