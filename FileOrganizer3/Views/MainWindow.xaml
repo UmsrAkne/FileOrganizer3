@@ -16,6 +16,7 @@
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
+    FocusManager.FocusedElement="{Binding ElementName=ListBox}"
     mc:Ignorable="d">
 
     <b:Interaction.Behaviors>
@@ -171,6 +172,7 @@
         </StackPanel>
 
         <ListBox
+            x:Name="ListBox"
             Grid.Row="1"
             AlternationCount="2"
             ItemsSource="{Binding FileContainer.FileInfoWrappers}"
