@@ -88,42 +88,13 @@ namespace FileOrganizer3.Behaviors
                     break;
 
                 case Key.N:
-                    var list = listBox.ItemsSource.OfType<FileInfoWrapper>().ToList();
-                    if (!list.Any(f => f.IsMarked))
-                    {
-                        break;
-                    }
-
-                    if (list.Count(f => f.IsMarked) == 1)
-                    {
-                        listBox.SelectedIndex = list.FindIndex(f => f.IsMarked);
-                        break;
-                    }
-
                     if (!isShiftPressed)
                     {
-                        var part = list.Skip(listBox.SelectedIndex + 1).ToList();
-                        if (part.Any(f => f.IsMarked))
-                        {
-                            listBox.SelectedIndex += part.FindIndex(f => f.IsMarked) + 1;
-                        }
-                        else
-                        {
-                            listBox.SelectedIndex = list.FindIndex(f => f.IsMarked);
-                        }
+                        vm.CursorManager.MoveCursorToNextMark();
                     }
                     else
                     {
-                        var part = list.Take(listBox.SelectedIndex).Reverse().ToList();
-                        if (part.Any(f => f.IsMarked))
-                        {
-                            listBox.SelectedIndex -= part.FindIndex(f => f.IsMarked) + 1;
-                        }
-                        else
-                        {
-                            var target = list.Skip(listBox.SelectedIndex + 1).ToList().FirstOrDefault(f => f.IsMarked);
-                            listBox.SelectedIndex = list.IndexOf(target);
-                        }
+                        vm.CursorManager.MoveCursorToPrevMark();
                     }
 
                     break;
