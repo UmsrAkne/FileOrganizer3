@@ -20,12 +20,18 @@ namespace FileOrganizer3.Models
 
         public void MoveCursorUp()
         {
-            SelectedIndex--;
+            if (SelectedIndex > 0)
+            {
+                SelectedIndex--;
+            }
         }
 
         public void MoveCursorDown()
         {
-            SelectedIndex++;
+            if (SelectedIndex < Items.Count - 1)
+            {
+                SelectedIndex++;
+            }
         }
 
         public void MoveCursorToTop()
