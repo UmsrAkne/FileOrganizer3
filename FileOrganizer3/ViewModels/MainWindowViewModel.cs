@@ -32,7 +32,7 @@ namespace FileOrganizer3.ViewModels
         /// </summary>
         public DelegateCommand PlaySoundCommand => new DelegateCommand(() =>
         {
-            var item = FileContainer.SelectedItem;
+            var item = FileContainer.CursorManager.SelectedItem;
             if (item is not { IsSoundFile: true, })
             {
                 return;
