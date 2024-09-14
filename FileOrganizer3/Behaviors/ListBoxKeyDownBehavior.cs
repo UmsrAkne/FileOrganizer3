@@ -39,6 +39,12 @@ namespace FileOrganizer3.Behaviors
             switch (e.Key)
             {
                 case Key.G:
+                    if (isShiftPressed)
+                    {
+                        vm.CursorManager.MoveCursorToBottom();
+                        break;
+                    }
+
                     vm.CursorManager.MoveCursorToTop();
                     break;
                 case Key.J:
