@@ -11,13 +11,23 @@ namespace FileOrganizer3.Models
     {
         private FileInfoWrapper selectedItem;
         private int startIndex = 1;
+        private ObservableCollection<FileInfoWrapper> fileInfoWrappers = new ();
 
-        public ObservableCollection<FileInfoWrapper> FileInfoWrappers { get; set; } = new ();
-
-        public FileInfoWrapper SelectedItem
+        public ObservableCollection<FileInfoWrapper> FileInfoWrappers
         {
-            get => selectedItem;
-            set => SetProperty(ref selectedItem, value);
+            get => fileInfoWrappers;
+            set
+            {
+                if (SetProperty(ref fileInfoWrappers, value))
+                {
+                    RaisePropertyChanged(nameof(IgnoreFileCommand));
+                    RaisePropertyChanged(nameof(AppendTextToNameCommand));
+                    RaisePropertyChanged(nameof(AppendNumberToNameCommand));
+                    RaisePropertyChanged(nameof(RenameCommand));
+                    RaisePropertyChanged(nameof(ClearFilesCommand));
+                    CursorManager.Items = value;
+                }
+            }
         }
 
         public int StartIndex
@@ -32,24 +42,26 @@ namespace FileOrganizer3.Models
             }
         }
 
+        public CursorManager CursorManager { get; } = new ();
+
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
         {
-            if (SelectedItem == null)
+            if (CursorManager.SelectedItem == null)
             {
                 return;
             }
 
-            SelectedItem.IsMarked = !SelectedItem.IsMarked;
+            CursorManager.SelectedItem.IsMarked = !CursorManager.SelectedItem.IsMarked;
         });
 
         public DelegateCommand IgnoreFileCommand => new (() =>
         {
-            if (SelectedItem == null)
+            if (CursorManager.SelectedItem == null)
             {
                 return;
             }
 
-            SelectedItem.IsIgnored = !SelectedItem.IsIgnored;
+            CursorManager.SelectedItem.IsIgnored = !CursorManager.SelectedItem.IsIgnored;
             ReIndex(FileInfoWrappers);
         });
 

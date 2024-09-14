@@ -16,6 +16,7 @@
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
+    FocusManager.FocusedElement="{Binding ElementName=ListBox}"
     mc:Ignorable="d">
 
     <b:Interaction.Behaviors>
@@ -171,10 +172,12 @@
         </StackPanel>
 
         <ListBox
+            x:Name="ListBox"
             Grid.Row="1"
             AlternationCount="2"
             ItemsSource="{Binding FileContainer.FileInfoWrappers}"
-            SelectedItem="{Binding FileContainer.SelectedItem}">
+            SelectedIndex="{Binding FileContainer.CursorManager.SelectedIndex}"
+            SelectedItem="{Binding FileContainer.CursorManager.SelectedItem}">
 
             <ListBox.Resources>
                 <Style TargetType="TextBlock">
@@ -326,7 +329,8 @@
             Grid.Row="3"
             AlternationCount="2"
             ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
-            SelectedItem="{Binding FileContainer.SelectedItem}"
+            SelectedIndex="{Binding PlayedFileContainer.CursorManager.SelectedIndex}"
+            SelectedItem="{Binding PlayedFileContainer.CursorManager.SelectedItem}"
             Visibility="{Binding AppearanceManager.HistoryListVisibility}">
 
             <b:Interaction.Behaviors>

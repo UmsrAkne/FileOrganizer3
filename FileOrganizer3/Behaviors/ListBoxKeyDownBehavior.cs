@@ -39,11 +39,13 @@ namespace FileOrganizer3.Behaviors
             switch (e.Key)
             {
                 case Key.G:
-                    if (listBox.Items.Count != 0)
+                    if (isShiftPressed)
                     {
-                        listBox.SelectedIndex = isShiftPressed ? listBox.Items.Count - 1 : 0;
+                        vm.CursorManager.MoveCursorToBottom();
+                        break;
                     }
 
+                    vm.CursorManager.MoveCursorToTop();
                     break;
                 case Key.J:
                     if (isShiftPressed && listBox.SelectedIndex < listBox.Items.Count - 1)
@@ -62,7 +64,7 @@ namespace FileOrganizer3.Behaviors
                         break;
                     }
 
-                    listBox.SelectedIndex++;
+                    vm.CursorManager.MoveCursorDown();
                     break;
 
                 case Key.K:
@@ -82,50 +84,17 @@ namespace FileOrganizer3.Behaviors
                         break;
                     }
 
-                    if (listBox.SelectedIndex - 1 >= 0)
-                    {
-                        listBox.SelectedIndex--;
-                    }
-
+                    vm.CursorManager.MoveCursorUp();
                     break;
 
                 case Key.N:
-                    var list = listBox.ItemsSource.OfType<FileInfoWrapper>().ToList();
-                    if (!list.Any(f => f.IsMarked))
-                    {
-                        break;
-                    }
-
-                    if (list.Count(f => f.IsMarked) == 1)
-                    {
-                        listBox.SelectedIndex = list.FindIndex(f => f.IsMarked);
-                        break;
-                    }
-
                     if (!isShiftPressed)
                     {
-                        var part = list.Skip(listBox.SelectedIndex + 1).ToList();
-                        if (part.Any(f => f.IsMarked))
-                        {
-                            listBox.SelectedIndex += part.FindIndex(f => f.IsMarked) + 1;
-                        }
-                        else
-                        {
-                            listBox.SelectedIndex = list.FindIndex(f => f.IsMarked);
-                        }
+                        vm.CursorManager.MoveCursorToNextMark();
                     }
                     else
                     {
-                        var part = list.Take(listBox.SelectedIndex).Reverse().ToList();
-                        if (part.Any(f => f.IsMarked))
-                        {
-                            listBox.SelectedIndex -= part.FindIndex(f => f.IsMarked) + 1;
-                        }
-                        else
-                        {
-                            var target = list.Skip(listBox.SelectedIndex + 1).ToList().FirstOrDefault(f => f.IsMarked);
-                            listBox.SelectedIndex = list.IndexOf(target);
-                        }
+                        vm.CursorManager.MoveCursorToPrevMark();
                     }
 
                     break;
