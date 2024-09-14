@@ -39,11 +39,7 @@ namespace FileOrganizer3.Behaviors
             switch (e.Key)
             {
                 case Key.G:
-                    if (listBox.Items.Count != 0)
-                    {
-                        listBox.SelectedIndex = isShiftPressed ? listBox.Items.Count - 1 : 0;
-                    }
-
+                    vm.CursorManager.MoveCursorToTop();
                     break;
                 case Key.J:
                     if (isShiftPressed && listBox.SelectedIndex < listBox.Items.Count - 1)
@@ -62,7 +58,7 @@ namespace FileOrganizer3.Behaviors
                         break;
                     }
 
-                    listBox.SelectedIndex++;
+                    vm.CursorManager.MoveCursorDown();
                     break;
 
                 case Key.K:
@@ -82,11 +78,7 @@ namespace FileOrganizer3.Behaviors
                         break;
                     }
 
-                    if (listBox.SelectedIndex - 1 >= 0)
-                    {
-                        listBox.SelectedIndex--;
-                    }
-
+                    vm.CursorManager.MoveCursorUp();
                     break;
 
                 case Key.N:
