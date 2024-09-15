@@ -211,6 +211,15 @@
                     </DataTemplate.Resources>
 
                     <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                        <Setter Property="Opacity" Value="0.25" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -313,10 +322,6 @@
                                         <Setter TargetName="Border" Property="Background" Value="LightGray" />
                                     </Trigger>
 
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.4" />
-                                    </DataTrigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -359,6 +364,15 @@
                     </DataTemplate.Resources>
 
                     <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                        <Setter Property="Opacity" Value="0.25" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -436,10 +450,6 @@
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="Border" Property="Background" Value="LightGray" />
                                     </Trigger>
-
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.4" />
-                                    </DataTrigger>
 
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
