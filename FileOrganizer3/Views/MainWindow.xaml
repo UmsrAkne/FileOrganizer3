@@ -16,7 +16,7 @@
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
-    FocusManager.FocusedElement="{Binding ElementName=ListBox}"
+    FocusManager.FocusedElement="{Binding ElementName=MainListBox}"
     mc:Ignorable="d">
 
     <Window.InputBindings>
@@ -179,7 +179,7 @@
         </StackPanel>
 
         <ListBox
-            x:Name="ListBox"
+            x:Name="MainListBox"
             Grid.Row="1"
             AlternationCount="2"
             ItemsSource="{Binding FileContainer.FileInfoWrappers}"
@@ -338,6 +338,7 @@
             VerticalAlignment="Stretch" />
 
         <ListBox
+            x:Name="HistoryListBox"
             Grid.Row="3"
             AlternationCount="2"
             ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
