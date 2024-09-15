@@ -11,13 +11,20 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
     Title="{Binding TextWrapper}"
-    Width="525"
-    Height="500"
+    Width="800"
+    Height="600"
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"
     prism:ViewModelLocator.AutoWireViewModel="True"
     AllowDrop="True"
-    FocusManager.FocusedElement="{Binding ElementName=ListBox}"
+    FocusManager.FocusedElement="{Binding ElementName=MainListBox}"
     mc:Ignorable="d">
+
+    <Window.InputBindings>
+        <KeyBinding
+            Key="H"
+            Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}"
+            Modifiers="Control" />
+    </Window.InputBindings>
 
     <b:Interaction.Behaviors>
         <behaviors:DragAndDropBehavior />
@@ -120,7 +127,7 @@
 
                 </MenuItem>
                 <MenuItem Header="表示">
-                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ" />
+                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
                 </MenuItem>
                 <MenuItem Header="設定">
                     <MenuItem Header="フォントサイズを設定する">
@@ -172,7 +179,7 @@
         </StackPanel>
 
         <ListBox
-            x:Name="ListBox"
+            x:Name="MainListBox"
             Grid.Row="1"
             AlternationCount="2"
             ItemsSource="{Binding FileContainer.FileInfoWrappers}"
@@ -192,7 +199,10 @@
             <ListBox.InputBindings>
                 <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
                 <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
-                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding PlaySoundAndSaveCommand}"
+                    CommandParameter="{Binding FileContainer.CursorManager.SelectedItem}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
@@ -204,6 +214,15 @@
                     </DataTemplate.Resources>
 
                     <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                        <Setter Property="Opacity" Value="0.25" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -306,10 +325,6 @@
                                         <Setter TargetName="Border" Property="Background" Value="LightGray" />
                                     </Trigger>
 
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.4" />
-                                    </DataTrigger>
-
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
@@ -326,6 +341,7 @@
             VerticalAlignment="Stretch" />
 
         <ListBox
+            x:Name="HistoryListBox"
             Grid.Row="3"
             AlternationCount="2"
             ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
@@ -338,9 +354,12 @@
             </b:Interaction.Behaviors>
 
             <ListBox.InputBindings>
-                <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
-                <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
-                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
+                <KeyBinding Key="M" Command="{Binding PlayedFileContainer.MarkCommand}" />
+                <KeyBinding Key="I" Command="{Binding PlayedFileContainer.IgnoreFileCommand}" />
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding PlaySoundCommand}"
+                    CommandParameter="{Binding PlayedFileContainer.CursorManager.SelectedItem}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
@@ -352,6 +371,15 @@
                     </DataTemplate.Resources>
 
                     <Grid>
+                        <Grid.Style>
+                            <Style TargetType="Grid">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                        <Setter Property="Opacity" Value="0.25" />
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Grid.Style>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
@@ -429,10 +457,6 @@
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Setter TargetName="Border" Property="Background" Value="LightGray" />
                                     </Trigger>
-
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.4" />
-                                    </DataTrigger>
 
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

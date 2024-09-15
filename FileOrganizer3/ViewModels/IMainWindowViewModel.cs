@@ -13,6 +13,8 @@ namespace FileOrganizer3.ViewModels
 
         AppearanceManager AppearanceManager { get; set; }
 
-        DelegateCommand PlaySoundCommand { get; }
+        DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; }
+
+        DelegateCommand<FileInfoWrapper> PlaySoundCommand { get; }
     }
 }

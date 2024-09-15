@@ -9,9 +9,13 @@ namespace FileOrganizer3.Models
 {
     public class FileContainer : BindableBase
     {
-        private FileInfoWrapper selectedItem;
         private int startIndex = 1;
-        private ObservableCollection<FileInfoWrapper> fileInfoWrappers = new ();
+        private ObservableCollection<FileInfoWrapper> fileInfoWrappers;
+
+        public FileContainer()
+        {
+            FileInfoWrappers = new ObservableCollection<FileInfoWrapper>();
+        }
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers
         {

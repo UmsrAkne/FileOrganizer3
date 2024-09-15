@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 using FileOrganizer3.Models;
@@ -34,7 +33,9 @@ namespace FileOrganizer3.Behaviors
                 return;
             }
 
-            var vm = ((MainWindowViewModel)listBox.DataContext).FileContainer;
+            var vm = listBox.Name == "MainListBox"
+                ? ((MainWindowViewModel)listBox.DataContext).FileContainer
+                : ((MainWindowViewModel)listBox.DataContext).PlayedFileContainer;
 
             switch (e.Key)
             {
