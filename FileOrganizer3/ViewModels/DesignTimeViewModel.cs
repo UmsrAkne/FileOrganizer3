@@ -21,16 +21,14 @@ namespace FileOrganizer3.ViewModels
 
         public TextWrapper TextWrapper { get; } = new ();
 
-        public FileContainer FileContainer
-        {
-            get => fileContainer;
-            set => SetProperty(ref fileContainer, value);
-        }
+        public FileContainer FileContainer { get => fileContainer; set => SetProperty(ref fileContainer, value); }
 
         public FileContainer PlayedFileContainer { get; set; } = new ();
 
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
-        public DelegateCommand PlaySoundCommand { get; } = new (() => { });
+        public DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; } = new ((_) => { });
+
+        public DelegateCommand<FileInfoWrapper> PlaySoundCommand { get; } = new (_ => { });
     }
 }

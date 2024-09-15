@@ -199,7 +199,10 @@
             <ListBox.InputBindings>
                 <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
                 <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
-                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding PlaySoundAndSaveCommand}"
+                    CommandParameter="{Binding FileContainer.CursorManager.SelectedItem}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
@@ -351,9 +354,12 @@
             </b:Interaction.Behaviors>
 
             <ListBox.InputBindings>
-                <KeyBinding Key="M" Command="{Binding FileContainer.MarkCommand}" />
-                <KeyBinding Key="I" Command="{Binding FileContainer.IgnoreFileCommand}" />
-                <KeyBinding Key="Return" Command="{Binding PlaySoundCommand}" />
+                <KeyBinding Key="M" Command="{Binding PlayedFileContainer.MarkCommand}" />
+                <KeyBinding Key="I" Command="{Binding PlayedFileContainer.IgnoreFileCommand}" />
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding PlaySoundCommand}"
+                    CommandParameter="{Binding PlayedFileContainer.CursorManager.SelectedItem}" />
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
