@@ -123,7 +123,11 @@
                     </MenuItem>
 
 
+                    <MenuItem Command="{Binding FileContainer.ReverseListCommand}" Header="ファイルリストを逆順にする" />
+
                     <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
+
+                    <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
 
                 </MenuItem>
                 <MenuItem Header="表示">

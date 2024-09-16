@@ -138,6 +138,11 @@ namespace FileOrganizer3.Models
             }
         });
 
+        public DelegateCommand ReverseListCommand => new DelegateCommand(() =>
+        {
+            FileInfoWrappers = new ObservableCollection<FileInfoWrapper>(FileInfoWrappers.Reverse());
+        });
+
         public DelegateCommand ClearFilesCommand => new DelegateCommand(() =>
         {
             FileInfoWrappers.Clear();
