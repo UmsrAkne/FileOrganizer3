@@ -127,6 +127,8 @@
 
                     <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
 
+                    <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
+
                 </MenuItem>
                 <MenuItem Header="表示">
                     <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
