@@ -16,7 +16,7 @@ jobs:
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: '10.0' # プロジェクトに合わせたバージョンを指定
+        dotnet-version: '6.0.x' # プロジェクトに合わせたバージョンを指定
 
     - name: Restore dependencies
       run: dotnet restore
