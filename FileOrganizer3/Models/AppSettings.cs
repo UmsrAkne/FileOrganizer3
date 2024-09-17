@@ -11,6 +11,10 @@ namespace FileOrganizer3.Models
 
         public double FontSize { get; set; }
 
+        public string PrefixText { get; set; }
+
+        public string SuffixText { get; set; }
+
         public static AppSettings Load()
         {
             try

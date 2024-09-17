@@ -20,7 +20,7 @@
             <StackPanel Margin="5">
                 <TextBlock Text="プレフィックス" />
                 <Border Margin="0,3" />
-                <TextBox Margin="5,0" Text="prefix" />
+                <TextBox Margin="5,0" Text="{Binding PrefixText}" />
             </StackPanel>
         </StackPanel>
 
