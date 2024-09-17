@@ -27,8 +27,14 @@ namespace FileOrganizer3.ViewModels
 
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
-        public DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; } = new ((_) => { });
+        public DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; } = new ((_) =>
+        {
+        });
 
-        public DelegateCommand<FileInfoWrapper> PlaySoundCommand { get; } = new (_ => { });
-    }
+        public DelegateCommand<FileInfoWrapper> PlaySoundCommand { get; } = new (_ =>
+        {
+        });
+
+        public DelegateCommand ShowSettingPageCommand { get; } = new (() => { });
+}
 }

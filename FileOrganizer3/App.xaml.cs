@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using FileOrganizer3.ViewModels;
 using FileOrganizer3.Views;
 using Prism.Ioc;
 
@@ -16,6 +17,7 @@ namespace FileOrganizer3
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterDialog<SettingPage, SettingPageViewModel>();
         }
     }
 }

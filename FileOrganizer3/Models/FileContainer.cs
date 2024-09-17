@@ -76,6 +76,10 @@ namespace FileOrganizer3.Models
                 return;
             }
 
+            option.Text = option.IsPrefix
+                ? AppSettings.Load().PrefixText
+                : AppSettings.Load().SuffixText;
+
             var files = ExtractFiles(FileInfoWrappers, option.ExtractOption).ToList();
             foreach (var fb in files.Where(f => f.TemporaryName == string.Empty))
             {
