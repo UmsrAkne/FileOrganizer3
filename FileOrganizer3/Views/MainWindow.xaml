@@ -134,6 +134,7 @@
                     <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
                 </MenuItem>
                 <MenuItem Header="設定">
+                    <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
                     <MenuItem Header="フォントサイズを設定する">
                         <MenuItem Command="{Binding AppearanceManager.SetFontSizeCommand}" Header="大">
                             <MenuItem.CommandParameter>

@@ -2,8 +2,10 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using FileOrganizer3.Models;
+using FileOrganizer3.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 
 namespace FileOrganizer3.ViewModels
 {
@@ -11,9 +13,17 @@ namespace FileOrganizer3.ViewModels
     public class MainWindowViewModel : BindableBase, IMainWindowViewModel, IDisposable
     {
         private readonly SoundPlayer soundPlayer = new ();
+        private readonly IDialogService dialogService;
 
         public MainWindowViewModel()
         {
+            SetDummyData();
+            AppearanceManager.FontSize = AppSettings.Load().FontSize;
+        }
+
+        public MainWindowViewModel(IDialogService service)
+        {
+            dialogService = service;
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
         }
@@ -53,6 +63,11 @@ namespace FileOrganizer3.ViewModels
             }
 
             soundPlayer.PlayAudio(param);
+        });
+
+        public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
+        {
+            dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });
         });
 
         public void Dispose()
