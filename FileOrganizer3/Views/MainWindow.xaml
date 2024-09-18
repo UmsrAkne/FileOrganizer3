@@ -61,6 +61,17 @@
                         Command="{Binding FileContainer.MarkFilesCommand}"
                         CommandParameter="{x:Static models:ExtractOption.NonIgnored}"
                         Header="無視していないアイテムをマーク" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.ToggleMarksCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.All}"
+                        Header="全てのマークをトグル" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.ToggleMarksCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.NonIgnored}"
+                        Header="無視していないアイテムのマークをトグル" />
+
                 </MenuItem>
 
                 <MenuItem Header="リネーム">
