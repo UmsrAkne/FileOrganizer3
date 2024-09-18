@@ -11,11 +11,14 @@ namespace FileOrganizer3.ViewModels
     {
         private string prefixText = "prefix";
         private string suffixText = "suffix";
+        private int digitCount = 5;
         private AppSettings setting;
 
         public event Action<IDialogResult> RequestClose;
 
         public string Title => string.Empty;
+
+        public int DigitCount { get => digitCount; set => SetProperty(ref digitCount, value); }
 
         public string PrefixText { get => prefixText; set => SetProperty(ref prefixText, value); }
 
@@ -32,6 +35,7 @@ namespace FileOrganizer3.ViewModels
         {
             setting.PrefixText = PrefixText;
             setting.SuffixText = SuffixText;
+            setting.FormatDigitCount = DigitCount;
             setting.Save();
         }
 
@@ -40,6 +44,7 @@ namespace FileOrganizer3.ViewModels
             setting = AppSettings.Load();
             PrefixText = setting.PrefixText;
             SuffixText = setting.SuffixText;
+            DigitCount = setting.FormatDigitCount;
         }
     }
 }
