@@ -10,6 +10,7 @@ namespace FileOrganizer3.ViewModels
     public class SettingPageViewModel : BindableBase, IDialogAware
     {
         private string prefixText = "prefix";
+        private string suffixText = "suffix";
         private AppSettings setting;
 
         public event Action<IDialogResult> RequestClose;
@@ -23,11 +24,14 @@ namespace FileOrganizer3.ViewModels
             RequestClose?.Invoke(new DialogResult());
         });
 
+        public string SuffixText { get => suffixText; set => SetProperty(ref suffixText, value); }
+
         public bool CanCloseDialog() => true;
 
         public void OnDialogClosed()
         {
             setting.PrefixText = PrefixText;
+            setting.SuffixText = SuffixText;
             setting.Save();
         }
 
@@ -35,6 +39,7 @@ namespace FileOrganizer3.ViewModels
         {
             setting = AppSettings.Load();
             PrefixText = setting.PrefixText;
+            SuffixText = setting.SuffixText;
         }
     }
 }

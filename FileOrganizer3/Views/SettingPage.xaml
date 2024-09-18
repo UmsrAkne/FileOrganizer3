@@ -22,6 +22,12 @@
                 <Border Margin="0,3" />
                 <TextBox Margin="5,0" Text="{Binding PrefixText}" />
             </StackPanel>
+
+            <StackPanel Margin="5">
+                <TextBlock Text="サフィックス" />
+                <Border Margin="0,3" />
+                <TextBox Margin="5,0" Text="{Binding SuffixText}" />
+            </StackPanel>
         </StackPanel>
 
         <Button
