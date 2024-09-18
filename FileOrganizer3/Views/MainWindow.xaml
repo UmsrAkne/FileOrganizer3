@@ -42,6 +42,39 @@
         <StackPanel Grid.Row="0">
             <Menu>
                 <MenuItem Header="機能">
+
+                    <MenuItem Command="{Binding FileContainer.ReverseListCommand}" Header="ファイルリストを逆順にする" />
+
+                    <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
+
+                    <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
+
+                </MenuItem>
+
+                <MenuItem Header="マーク">
+                    <MenuItem
+                        Command="{Binding FileContainer.MarkFilesCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.All}"
+                        Header="全ての項目をマーク" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.MarkFilesCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.NonIgnored}"
+                        Header="無視していないアイテムをマーク" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.ToggleMarksCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.All}"
+                        Header="全てのマークをトグル" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.ToggleMarksCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.NonIgnored}"
+                        Header="無視していないアイテムのマークをトグル" />
+
+                </MenuItem>
+
+                <MenuItem Header="リネーム">
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにプレフィックス">
                         <MenuItem.CommandParameter>
                             <models:RenameOption IsPrefix="True">
@@ -122,14 +155,8 @@
                         </MenuItem.CommandParameter>
                     </MenuItem>
 
-
-                    <MenuItem Command="{Binding FileContainer.ReverseListCommand}" Header="ファイルリストを逆順にする" />
-
-                    <MenuItem Command="{Binding FileContainer.ClearFilesCommand}" Header="ファイルリストをクリア" />
-
-                    <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
-
                 </MenuItem>
+
                 <MenuItem Header="表示">
                     <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
                 </MenuItem>

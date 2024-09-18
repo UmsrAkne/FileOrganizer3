@@ -58,6 +58,34 @@ namespace FileOrganizer3.Models
             CursorManager.SelectedItem.IsMarked = !CursorManager.SelectedItem.IsMarked;
         });
 
+        public DelegateCommand<ExtractOption?> MarkFilesCommand => new DelegateCommand<ExtractOption?>((param) =>
+        {
+            if (param == null)
+            {
+                return;
+            }
+
+            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            foreach (var fileInfoWrapper in targets)
+            {
+                fileInfoWrapper.IsMarked = true;
+            }
+        });
+
+        public DelegateCommand<ExtractOption?> ToggleMarksCommand => new DelegateCommand<ExtractOption?>((param) =>
+        {
+            if (param == null)
+            {
+                return;
+            }
+
+            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            foreach (var fileInfoWrapper in targets)
+            {
+                fileInfoWrapper.IsMarked = !fileInfoWrapper.IsMarked;
+            }
+        });
+
         public DelegateCommand IgnoreFileCommand => new (() =>
         {
             if (CursorManager.SelectedItem == null)
