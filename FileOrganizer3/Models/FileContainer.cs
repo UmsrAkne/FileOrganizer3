@@ -115,10 +115,13 @@ namespace FileOrganizer3.Models
                 fb.TemporaryName = Path.GetFileNameWithoutExtension(fb.Name);
             }
 
+            var setting = AppSettings.Load();
+            var digitCount = setting.FormatDigitCount != 0 ? setting.FormatDigitCount : 1;
+
             for (var i = 0; i < files.Count; i++)
             {
                 var f = files[i];
-                var num = (i + StartIndex).ToString("D5");
+                var num = (i + StartIndex).ToString($"D{digitCount}");
 
                 files[i].TemporaryName = option.IsPrefix
                     ? $"{num}_{f.TemporaryName}"

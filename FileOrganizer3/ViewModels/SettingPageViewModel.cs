@@ -10,11 +10,15 @@ namespace FileOrganizer3.ViewModels
     public class SettingPageViewModel : BindableBase, IDialogAware
     {
         private string prefixText = "prefix";
+        private string suffixText = "suffix";
+        private int digitCount = 5;
         private AppSettings setting;
 
         public event Action<IDialogResult> RequestClose;
 
         public string Title => string.Empty;
+
+        public int DigitCount { get => digitCount; set => SetProperty(ref digitCount, value); }
 
         public string PrefixText { get => prefixText; set => SetProperty(ref prefixText, value); }
 
@@ -23,11 +27,15 @@ namespace FileOrganizer3.ViewModels
             RequestClose?.Invoke(new DialogResult());
         });
 
+        public string SuffixText { get => suffixText; set => SetProperty(ref suffixText, value); }
+
         public bool CanCloseDialog() => true;
 
         public void OnDialogClosed()
         {
             setting.PrefixText = PrefixText;
+            setting.SuffixText = SuffixText;
+            setting.FormatDigitCount = DigitCount;
             setting.Save();
         }
 
@@ -35,6 +43,8 @@ namespace FileOrganizer3.ViewModels
         {
             setting = AppSettings.Load();
             PrefixText = setting.PrefixText;
+            SuffixText = setting.SuffixText;
+            DigitCount = setting.FormatDigitCount;
         }
     }
 }

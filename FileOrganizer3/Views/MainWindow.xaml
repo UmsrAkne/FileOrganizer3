@@ -44,7 +44,7 @@
                 <MenuItem Header="機能">
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにプレフィックス">
                         <MenuItem.CommandParameter>
-                            <models:RenameOption IsPrefix="True" Text="marked">
+                            <models:RenameOption IsPrefix="True">
                                 <models:RenameOption.ExtractOption>
                                     <models:ExtractOption>Marked</models:ExtractOption>
                                 </models:RenameOption.ExtractOption>
@@ -54,7 +54,7 @@
 
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにサフィックス">
                         <MenuItem.CommandParameter>
-                            <models:RenameOption IsPrefix="False" Text="marked">
+                            <models:RenameOption IsPrefix="False">
                                 <models:RenameOption.ExtractOption>
                                     <models:ExtractOption>Marked</models:ExtractOption>
                                 </models:RenameOption.ExtractOption>
@@ -64,7 +64,7 @@
 
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにプレフィックス">
                         <MenuItem.CommandParameter>
-                            <models:RenameOption IsPrefix="True" Text="ignored">
+                            <models:RenameOption IsPrefix="True">
                                 <models:RenameOption.ExtractOption>
                                     <models:ExtractOption>Ignored</models:ExtractOption>
                                 </models:RenameOption.ExtractOption>
@@ -74,7 +74,7 @@
 
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="無視状態のファイルにサフィックス">
                         <MenuItem.CommandParameter>
-                            <models:RenameOption IsPrefix="False" Text="ignored">
+                            <models:RenameOption IsPrefix="False">
                                 <models:RenameOption.ExtractOption>
                                     <models:ExtractOption>Ignored</models:ExtractOption>
                                 </models:RenameOption.ExtractOption>

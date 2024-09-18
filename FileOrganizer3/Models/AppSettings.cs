@@ -15,6 +15,8 @@ namespace FileOrganizer3.Models
 
         public string SuffixText { get; set; }
 
+        public int FormatDigitCount { get; set; }
+
         public static AppSettings Load()
         {
             try

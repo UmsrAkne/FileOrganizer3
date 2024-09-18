@@ -2,6 +2,7 @@
     x:Class="FileOrganizer3.Views.SettingPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="clr-namespace:FileOrganizer3.Views.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
@@ -9,6 +10,10 @@
     Width="800"
     d:DataContext="{d:DesignInstance viewModels:SettingPageViewModel}"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:IntToStringConverter x:Key="IntToStringConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -21,6 +26,18 @@
                 <TextBlock Text="プレフィックス" />
                 <Border Margin="0,3" />
                 <TextBox Margin="5,0" Text="{Binding PrefixText}" />
+            </StackPanel>
+
+            <StackPanel Margin="5">
+                <TextBlock Text="サフィックス" />
+                <Border Margin="0,3" />
+                <TextBox Margin="5,0" Text="{Binding SuffixText}" />
+            </StackPanel>
+
+            <StackPanel Margin="5">
+                <TextBlock Text="連番付与時の桁数" />
+                <Border Margin="0,3" />
+                <TextBox Margin="5,0" Text="{Binding DigitCount, Converter={StaticResource IntToStringConverter}}" />
             </StackPanel>
         </StackPanel>
 
