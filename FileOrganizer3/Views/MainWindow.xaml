@@ -51,6 +51,18 @@
 
                 </MenuItem>
 
+                <MenuItem Header="マーク">
+                    <MenuItem
+                        Command="{Binding FileContainer.MarkFilesCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.All}"
+                        Header="全ての項目をマーク" />
+
+                    <MenuItem
+                        Command="{Binding FileContainer.MarkFilesCommand}"
+                        CommandParameter="{x:Static models:ExtractOption.NonIgnored}"
+                        Header="無視していないアイテムをマーク" />
+                </MenuItem>
+
                 <MenuItem Header="リネーム">
                     <MenuItem Command="{Binding FileContainer.AppendTextToNameCommand}" Header="マークしたファイルにプレフィックス">
                         <MenuItem.CommandParameter>
