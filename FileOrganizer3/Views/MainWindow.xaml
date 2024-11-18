@@ -318,7 +318,7 @@
                                 <Style TargetType="TextBlock">
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding PlayCount}" Value="0">
-                                            <Setter Property="Foreground" Value="DarkGray" />
+                                            <Setter Property="Visibility" Value="Hidden" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
