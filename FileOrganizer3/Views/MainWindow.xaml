@@ -65,7 +65,7 @@
                     <MenuItem
                         Command="{Binding FileContainer.ToggleMarksCommand}"
                         CommandParameter="{x:Static models:ExtractOption.All}"
-                        Header="全てのマークをトグル" />
+                        Header="全てのアイテムのマークをトグル" />
 
                     <MenuItem
                         Command="{Binding FileContainer.ToggleMarksCommand}"

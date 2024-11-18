@@ -72,6 +72,9 @@ namespace FileOrganizer3.Models
             }
         });
 
+        /// <summary>
+        /// ファイルリストから、入力された ExtractOption に基づいて対象を選択。対象のファイルの `IsMarked` を反転します。
+        /// </summary>
         public DelegateCommand<ExtractOption?> ToggleMarksCommand => new DelegateCommand<ExtractOption?>((param) =>
         {
             if (param == null)
