@@ -313,6 +313,7 @@
                             Grid.Column="5"
                             Width="40"
                             Padding="8,0,0,0"
+                            FontSize="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}"
                             Text="{Binding PlayCount, StringFormat={}{0:D3}}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock">
