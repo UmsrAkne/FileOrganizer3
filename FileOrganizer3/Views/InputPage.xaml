@@ -8,7 +8,10 @@
     Title="{Binding Title}"
     d:DataContext="{d:DesignInstance viewModels:InputPageViewModel}"
     mc:Ignorable="d">
-    <Grid Width="400" Margin="5">
+    <Grid
+        Width="400"
+        Margin="5"
+        FocusManager.FocusedElement="{Binding ElementName=TextBox}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition />
@@ -18,9 +21,17 @@
         <TextBlock Grid.Row="0" Text="{Binding Message}" />
 
         <TextBox
+            x:Name="TextBox"
             Grid.Row="1"
             Margin="0,5"
-            Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Text, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding
+                    Key="Return"
+                    Command="{Binding CloseCommand}"
+                    Modifiers="Control" />
+            </TextBox.InputBindings>
+        </TextBox>
 
         <StackPanel
             Grid.Row="2"
@@ -30,7 +41,7 @@
             <Button
                 Padding="15,1"
                 Command="{Binding CloseCommand}"
-                Content="Close" />
+                Content="Confirm ( Ctrl + Enter )" />
         </StackPanel>
 
     </Grid>
