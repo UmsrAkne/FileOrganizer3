@@ -9,10 +9,13 @@ namespace FileOrganizer3.ViewModels
     public class InputPageViewModel : BindableBase, IDialogAware
     {
         private string title = "Input page";
+        private string message;
 
         public event Action<IDialogResult> RequestClose;
 
         public string Title { get => title; private set => SetProperty(ref title, value); }
+
+        public string Message { get => message; set => SetProperty(ref message, value); }
 
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
@@ -27,6 +30,10 @@ namespace FileOrganizer3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            if (parameters.TryGetValue<string>(nameof(Message), out var msg))
+            {
+                Message = msg;
+            }
         }
     }
 }

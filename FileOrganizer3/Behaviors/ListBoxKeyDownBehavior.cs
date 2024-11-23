@@ -146,6 +146,11 @@ namespace FileOrganizer3.Behaviors
                     vm.CursorManager.MoveCursorToTop();
                     break;
                 case Key.J:
+                    if (isControlPressed)
+                    {
+                        return;
+                    }
+
                     if (isShiftPressed && listBox.SelectedIndex < listBox.Items.Count - 1)
                     {
                         var index = listBox.SelectedIndex;
