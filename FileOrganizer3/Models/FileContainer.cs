@@ -194,7 +194,19 @@ namespace FileOrganizer3.Models
         public DelegateCommand ShowInputPageCommand => new DelegateCommand(() =>
         {
             var param = new DialogParameters { { nameof(InputPageViewModel.Message), "ジャンプする番号を入力してください。" }, };
-            dialogService.ShowDialog(nameof(InputPage), param, result => { });
+            dialogService.ShowDialog(nameof(InputPage), param, result =>
+            {
+                if (result.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+
+                var inputText = result.Parameters.GetValue<string>(nameof(InputPageViewModel.Text));
+                if (int.TryParse(inputText, out var i))
+                {
+                    CursorManager.SelectedIndex = i - 1;
+                }
+            });
         });
 
         public void AddFiles(IEnumerable<string> filePaths)

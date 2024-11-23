@@ -10,6 +10,7 @@ namespace FileOrganizer3.ViewModels
     {
         private string title = "Input page";
         private string message;
+        private string text;
 
         public event Action<IDialogResult> RequestClose;
 
@@ -17,9 +18,13 @@ namespace FileOrganizer3.ViewModels
 
         public string Message { get => message; set => SetProperty(ref message, value); }
 
+        public string Text { get => text; set => SetProperty(ref text, value); }
+
         public DelegateCommand CloseCommand => new DelegateCommand(() =>
         {
-            RequestClose?.Invoke(new DialogResult());
+            var r = new DialogResult(ButtonResult.OK);
+            r.Parameters.Add(nameof(Text), Text);
+            RequestClose?.Invoke(r);
         });
 
         public bool CanCloseDialog() => true;
