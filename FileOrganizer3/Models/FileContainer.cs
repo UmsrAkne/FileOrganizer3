@@ -2,19 +2,24 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
+using FileOrganizer3.ViewModels;
+using FileOrganizer3.Views;
 using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Services.Dialogs;
 
 namespace FileOrganizer3.Models
 {
     public class FileContainer : BindableBase
     {
+        private readonly IDialogService dialogService;
         private int startIndex = 1;
         private ObservableCollection<FileInfoWrapper> fileInfoWrappers;
 
-        public FileContainer()
+        public FileContainer(IDialogService dialogService)
         {
             FileInfoWrappers = new ObservableCollection<FileInfoWrapper>();
+            this.dialogService = dialogService;
         }
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers
@@ -184,6 +189,24 @@ namespace FileOrganizer3.Models
         public DelegateCommand ClearFilesCommand => new DelegateCommand(() =>
         {
             FileInfoWrappers.Clear();
+        });
+
+        public DelegateCommand ShowInputPageCommand => new DelegateCommand(() =>
+        {
+            var param = new DialogParameters { { nameof(InputPageViewModel.Message), "ジャンプする番号を入力してください。" }, };
+            dialogService.ShowDialog(nameof(InputPage), param, result =>
+            {
+                if (result.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+
+                var inputText = result.Parameters.GetValue<string>(nameof(InputPageViewModel.Text));
+                if (int.TryParse(inputText, out var i))
+                {
+                    CursorManager.SelectedIndex = i - 1;
+                }
+            });
         });
 
         public void AddFiles(IEnumerable<string> filePaths)
