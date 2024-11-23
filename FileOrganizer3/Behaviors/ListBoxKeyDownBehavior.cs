@@ -113,11 +113,7 @@ namespace FileOrganizer3.Behaviors
                         // そのため、ページダウンに際してスクロールの開始位置を調節するためこのメソッドを使用している。インデックスはこのメソッドでは変化しない。
                         scrollViewer.PageUp();
                         var visibleItemCount = GetVisibleItemCount(listBox);
-                        for (var i = 0; i < visibleItemCount; i++)
-                        {
-                            vm.CursorManager.MoveCursorDown();
-                        }
-
+                        vm.CursorManager.MoveCursor(visibleItemCount);
                         e.Handled = true;
                     }
 
@@ -134,11 +130,7 @@ namespace FileOrganizer3.Behaviors
                     {
                         scrollViewer.PageDown();
                         var visibleItemCount = GetVisibleItemCount(listBox);
-                        for (var i = 0; i < visibleItemCount; i++)
-                        {
-                            vm.CursorManager.MoveCursorUp();
-                        }
-
+                        vm.CursorManager.MoveCursor(-visibleItemCount);
                         e.Handled = true;
                     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Prism.Mvvm;
 
@@ -33,6 +34,25 @@ namespace FileOrganizer3.Models
             {
                 SelectedIndex++;
             }
+        }
+
+        /// <summary>
+        /// 指定行数だけカーソルを上下に移動します。
+        /// </summary>
+        /// <param name="step">カーソルを動かす数を指定します。</param>
+        /// <remarks>
+        /// 新しいインデックスがコレクションのアイテム数を上回る場合や、0 より小さい場合は結果がその範囲に調節されます。
+        /// </remarks>
+        public void MoveCursor(int step)
+        {
+            if (Items == null || Items.Count == 0)
+            {
+                return;
+            }
+
+            var newIndex = SelectedIndex + step;
+            newIndex = Math.Min(Items.Count - 1, Math.Max(newIndex, 0));
+            SelectedIndex = newIndex;
         }
 
         public void MoveCursorToTop()
