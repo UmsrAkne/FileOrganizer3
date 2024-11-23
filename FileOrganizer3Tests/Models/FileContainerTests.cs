@@ -11,7 +11,7 @@ namespace FileOrganizer3Tests.Models
         [SetUp]
         public void SetUp()
         {
-            fileContainer = new FileContainer
+            fileContainer = new FileContainer (null)
             {
                 FileInfoWrappers = new ObservableCollection<FileInfoWrapper>()
                 {

@@ -8,7 +8,7 @@ namespace FileOrganizer3.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class DesignTimeViewModel : BindableBase, IMainWindowViewModel
     {
-        private FileContainer fileContainer = new ();
+        private FileContainer fileContainer = new (null);
 
         public DesignTimeViewModel()
         {
@@ -23,7 +23,7 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer FileContainer { get => fileContainer; set => SetProperty(ref fileContainer, value); }
 
-        public FileContainer PlayedFileContainer { get; set; } = new ();
+        public FileContainer PlayedFileContainer { get; set; } = new (null);
 
         public AppearanceManager AppearanceManager { get; set; } = new ();
 

@@ -235,6 +235,11 @@
                     Key="Return"
                     Command="{Binding PlaySoundAndSaveCommand}"
                     CommandParameter="{Binding FileContainer.CursorManager.SelectedItem}" />
+                <KeyBinding
+                    Key="J"
+                    Command="{Binding FileContainer.ShowInputPageCommand}"
+                    Modifiers="Control" />
+
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>

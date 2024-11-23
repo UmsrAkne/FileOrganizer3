@@ -17,6 +17,8 @@ namespace FileOrganizer3.ViewModels
 
         public MainWindowViewModel()
         {
+            FileContainer = new FileContainer(null);
+            PlayedFileContainer = new FileContainer(null);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
         }
@@ -24,15 +26,17 @@ namespace FileOrganizer3.ViewModels
         public MainWindowViewModel(IDialogService service)
         {
             dialogService = service;
+            FileContainer = new FileContainer(service);
+            PlayedFileContainer = new FileContainer(service);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
         }
 
         public TextWrapper TextWrapper { get; private set; } = new ();
 
-        public FileContainer FileContainer { get; set; } = new ();
+        public FileContainer FileContainer { get; set; }
 
-        public FileContainer PlayedFileContainer { get; set; } = new ();
+        public FileContainer PlayedFileContainer { get; set; }
 
         public AppearanceManager AppearanceManager { get; set; } = new ();
 

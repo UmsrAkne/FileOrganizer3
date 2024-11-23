@@ -1,6 +1,9 @@
 ﻿using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Input;
+using System.Windows.Media;
 using FileOrganizer3.Models;
 using FileOrganizer3.ViewModels;
 using Microsoft.Xaml.Behaviors;
@@ -9,6 +12,8 @@ namespace FileOrganizer3.Behaviors
 {
     public class ListBoxKeyDownBehavior : Behavior<ListBox>
     {
+        private ScrollViewer scrollViewer;
+
         protected override void OnAttached()
         {
             base.OnAttached();
@@ -19,6 +24,61 @@ namespace FileOrganizer3.Behaviors
         {
             base.OnDetaching();
             AssociatedObject.KeyDown -= OnKeyDown;
+        }
+
+        private static ScrollViewer GetScrollViewer(DependencyObject obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+
+            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(obj); i++)
+            {
+                var child = VisualTreeHelper.GetChild(obj, i);
+
+                if (child is ScrollViewer scrollViewer)
+                {
+                    return scrollViewer;
+                }
+
+                var childScrollViewer = GetScrollViewer(child);
+                if (childScrollViewer != null)
+                {
+                    return childScrollViewer;
+                }
+            }
+
+            return null;
+        }
+
+        private static int GetVisibleItemCount(ListBox listBox)
+        {
+            var scrollViewer = GetScrollViewer(listBox);
+            if (scrollViewer == null)
+            {
+                return 0;
+            }
+
+            // アイテムコンテナの高さを取得
+            var itemContainerGenerator = listBox.ItemContainerGenerator;
+            if (itemContainerGenerator.Status != GeneratorStatus.ContainersGenerated || listBox.Items.Count == 0)
+            {
+                return 0;
+            }
+
+            if (itemContainerGenerator.ContainerFromIndex(0) is not FrameworkElement firstItem)
+            {
+                return 0;
+            }
+
+            // アイテムの高さ
+            var itemHeight = firstItem.ActualHeight;
+
+            // ScrollViewer のビューポート高さから表示可能なアイテム数を計算
+            var viewportHeight = scrollViewer.ActualHeight;
+
+            return (int)(viewportHeight / itemHeight);
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
@@ -39,6 +99,43 @@ namespace FileOrganizer3.Behaviors
 
             switch (e.Key)
             {
+                case Key.D:
+                    if (!isControlPressed)
+                    {
+                        return;
+                    }
+
+                    scrollViewer ??= GetScrollViewer(listBox);
+                    if (scrollViewer != null)
+                    {
+                        // scrollViewer.PageDown, PageUp は以下のような動作をする。
+                        // 選択中のアイテムが表示領域の一番下（上）になるようにスクロールする。
+                        // そのため、ページダウンに際してスクロールの開始位置を調節するためこのメソッドを使用している。インデックスはこのメソッドでは変化しない。
+                        scrollViewer.PageUp();
+                        var visibleItemCount = GetVisibleItemCount(listBox);
+                        vm.CursorManager.MoveCursor(visibleItemCount);
+                        e.Handled = true;
+                    }
+
+                    break;
+
+                case Key.U:
+                    if (!isControlPressed)
+                    {
+                        return;
+                    }
+
+                    scrollViewer ??= GetScrollViewer(listBox);
+                    if (scrollViewer != null)
+                    {
+                        scrollViewer.PageDown();
+                        var visibleItemCount = GetVisibleItemCount(listBox);
+                        vm.CursorManager.MoveCursor(-visibleItemCount);
+                        e.Handled = true;
+                    }
+
+                    break;
+
                 case Key.G:
                     if (isShiftPressed)
                     {
@@ -49,6 +146,11 @@ namespace FileOrganizer3.Behaviors
                     vm.CursorManager.MoveCursorToTop();
                     break;
                 case Key.J:
+                    if (isControlPressed)
+                    {
+                        return;
+                    }
+
                     if (isShiftPressed && listBox.SelectedIndex < listBox.Items.Count - 1)
                     {
                         var index = listBox.SelectedIndex;
