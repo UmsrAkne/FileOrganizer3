@@ -13,5 +13,8 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="System.IO.Abstractions" Version="21.0.29" />
+		<None Include="$(SolutionDir)README.md">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
     </ItemGroup>
 </Project>
