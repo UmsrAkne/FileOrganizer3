@@ -221,19 +221,7 @@ namespace FileOrganizer3.Models
 
                 if (result.Parameters.TryGetValue<string>(nameof(InputPageViewModel.Text), out var pattern))
                 {
-                    var currentIndex = CursorManager.SelectedIndex;
-                    var idx = CursorManager.Items.Skip(currentIndex).ToList()
-                        .FindIndex(w => w.Name.Contains(pattern));
-
-                    if (idx >= 0)
-                    {
-                        CursorManager.SelectedIndex += idx;
-                        return;
-                    }
-
-                    idx = CursorManager.Items.Take(currentIndex).ToList()
-                        .FindIndex(w => w.Name.Contains(pattern));
-
+                    var idx = SearchIndexFromFileName(pattern, CursorManager);
                     if (idx < 0)
                     {
                         return;
@@ -260,6 +248,29 @@ namespace FileOrganizer3.Models
             {
                 f.Index = f.IsIgnored ? 0 : idx++;
             }
+        }
+
+        /// <summary>
+        /// 現在のカーソルのインデックスを検索開始点として、ファイル名に指定のパターンを含むファイルのインデックスを取得します。
+        /// </summary>
+        /// <param name="pattern">ファイル名に含まれるパターンを入力します。</param>
+        /// <param name="cursorMgr">検索の開始点の取得・検索するリストの取得に使います。オブジェクト自体は変更しません。</param>
+        /// <returns>マッチしたアイテムのインデックスを取得します。マッチしない場合は負の数を返します。</returns>
+        private int SearchIndexFromFileName(string pattern, CursorManager cursorMgr)
+        {
+            var searchStartIndex = cursorMgr.SelectedIndex;
+            var idx = cursorMgr.Items.Skip(searchStartIndex).ToList()
+                .FindIndex(w => w.Name.Contains(pattern));
+
+            if (idx >= 0)
+            {
+                return CursorManager.SelectedIndex + idx;
+            }
+
+            idx = cursorMgr.Items.Take(searchStartIndex).ToList()
+                .FindIndex(w => w.Name.Contains(pattern));
+
+            return idx < 0 ? -1 : idx;
         }
 
         private IEnumerable<FileInfoWrapper> ExtractFiles(IEnumerable<FileInfoWrapper> files, ExtractOption option)
