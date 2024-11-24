@@ -30,6 +30,8 @@
                     Key="Return"
                     Command="{Binding CloseCommand}"
                     Modifiers="Control" />
+
+                <KeyBinding Key="Escape" Command="{Binding CancelCommand}" />
             </TextBox.InputBindings>
         </TextBox>
 

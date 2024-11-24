@@ -15,6 +15,7 @@ namespace FileOrganizer3.Models
         private readonly IDialogService dialogService;
         private int startIndex = 1;
         private ObservableCollection<FileInfoWrapper> fileInfoWrappers;
+        private string searchPattern;
 
         public FileContainer(IDialogService dialogService)
         {
@@ -52,6 +53,8 @@ namespace FileOrganizer3.Models
         }
 
         public CursorManager CursorManager { get; } = new ();
+
+        public string SearchPattern { get => searchPattern; set => SetProperty(ref searchPattern, value); }
 
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
         {
@@ -209,6 +212,50 @@ namespace FileOrganizer3.Models
             });
         });
 
+        /// <summary>
+        /// ファイルを検索するためのページを出すコマンドです。
+        /// </summary>
+        public DelegateCommand ShowSearchPageCommand => new DelegateCommand(() =>
+        {
+            var param = new DialogParameters { { nameof(InputPageViewModel.Message), "検索するパターンを入力してください。" }, };
+            dialogService.ShowDialog(nameof(InputPage), param, result =>
+            {
+                if (result.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+
+                if (result.Parameters.TryGetValue<string>(nameof(InputPageViewModel.Text), out var pattern))
+                {
+                    SearchPattern = pattern;
+                    var idx = SearchIndexFromFileName(pattern, CursorManager);
+                    if (idx < 0)
+                    {
+                        return;
+                    }
+
+                    CursorManager.SelectedIndex = idx;
+                }
+            });
+        });
+
+        /// <summary>
+        /// SearchPattern プロパティを使ってファイル名を検索し、カーソルをマッチしたファイルまで移動させます。
+        /// </summary>
+        public DelegateCommand SearchCommand => new DelegateCommand(() =>
+        {
+            if (string.IsNullOrWhiteSpace(SearchPattern))
+            {
+                return;
+            }
+
+            var idx = SearchIndexFromFileName(SearchPattern, CursorManager);
+            if (idx >= 0)
+            {
+                CursorManager.SelectedIndex = idx;
+            }
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
@@ -225,6 +272,29 @@ namespace FileOrganizer3.Models
             {
                 f.Index = f.IsIgnored ? 0 : idx++;
             }
+        }
+
+        /// <summary>
+        /// 現在のカーソルのインデックスを検索開始点として、ファイル名に指定のパターンを含むファイルのインデックスを取得します。
+        /// </summary>
+        /// <param name="pattern">ファイル名に含まれるパターンを入力します。</param>
+        /// <param name="cursorMgr">検索の開始点の取得・検索するリストの取得に使います。オブジェクト自体は変更しません。</param>
+        /// <returns>マッチしたアイテムのインデックスを取得します。マッチしない場合は負の数を返します。</returns>
+        private int SearchIndexFromFileName(string pattern, CursorManager cursorMgr)
+        {
+            var searchStartIndex = cursorMgr.SelectedIndex;
+            var idx = cursorMgr.Items.Skip(searchStartIndex + 1).ToList()
+                .FindIndex(w => w.Name.Contains(pattern));
+
+            if (idx >= 0)
+            {
+                return CursorManager.SelectedIndex + idx + 1;
+            }
+
+            idx = cursorMgr.Items.Take(searchStartIndex).ToList()
+                .FindIndex(w => w.Name.Contains(pattern));
+
+            return idx < 0 ? -1 : idx;
         }
 
         private IEnumerable<FileInfoWrapper> ExtractFiles(IEnumerable<FileInfoWrapper> files, ExtractOption option)
