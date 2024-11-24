@@ -259,12 +259,12 @@ namespace FileOrganizer3.Models
         private int SearchIndexFromFileName(string pattern, CursorManager cursorMgr)
         {
             var searchStartIndex = cursorMgr.SelectedIndex;
-            var idx = cursorMgr.Items.Skip(searchStartIndex).ToList()
+            var idx = cursorMgr.Items.Skip(searchStartIndex + 1).ToList()
                 .FindIndex(w => w.Name.Contains(pattern));
 
             if (idx >= 0)
             {
-                return CursorManager.SelectedIndex + idx;
+                return CursorManager.SelectedIndex + idx + 1;
             }
 
             idx = cursorMgr.Items.Take(searchStartIndex).ToList()
