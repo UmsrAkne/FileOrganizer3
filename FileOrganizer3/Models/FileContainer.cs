@@ -15,6 +15,7 @@ namespace FileOrganizer3.Models
         private readonly IDialogService dialogService;
         private int startIndex = 1;
         private ObservableCollection<FileInfoWrapper> fileInfoWrappers;
+        private string searchPattern;
 
         public FileContainer(IDialogService dialogService)
         {
@@ -52,6 +53,8 @@ namespace FileOrganizer3.Models
         }
 
         public CursorManager CursorManager { get; } = new ();
+
+        public string SearchPattern { get => searchPattern; set => SetProperty(ref searchPattern, value); }
 
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
         {
@@ -221,6 +224,7 @@ namespace FileOrganizer3.Models
 
                 if (result.Parameters.TryGetValue<string>(nameof(InputPageViewModel.Text), out var pattern))
                 {
+                    SearchPattern = pattern;
                     var idx = SearchIndexFromFileName(pattern, CursorManager);
                     if (idx < 0)
                     {
@@ -230,6 +234,20 @@ namespace FileOrganizer3.Models
                     CursorManager.SelectedIndex = idx;
                 }
             });
+        });
+
+        public DelegateCommand SearchCommand => new DelegateCommand(() =>
+        {
+            if (string.IsNullOrWhiteSpace(SearchPattern))
+            {
+                return;
+            }
+
+            var idx = SearchIndexFromFileName(SearchPattern, CursorManager);
+            if (idx >= 0)
+            {
+                CursorManager.SelectedIndex = idx;
+            }
         });
 
         public void AddFiles(IEnumerable<string> filePaths)

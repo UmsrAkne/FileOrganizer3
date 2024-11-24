@@ -245,6 +245,8 @@
                     Command="{Binding FileContainer.ShowSearchPageCommand}"
                     Modifiers="Control" />
 
+                <KeyBinding Key="F" Command="{Binding FileContainer.SearchCommand}" />
+
             </ListBox.InputBindings>
 
             <ListBox.ItemTemplate>
