@@ -209,6 +209,41 @@ namespace FileOrganizer3.Models
             });
         });
 
+        public DelegateCommand ShowSearchPageCommand => new DelegateCommand(() =>
+        {
+            var param = new DialogParameters { { nameof(InputPageViewModel.Message), "検索するパターンを入力してください。" }, };
+            dialogService.ShowDialog(nameof(InputPage), param, result =>
+            {
+                if (result.Result != ButtonResult.OK)
+                {
+                    return;
+                }
+
+                if (result.Parameters.TryGetValue<string>(nameof(InputPageViewModel.Text), out var pattern))
+                {
+                    var currentIndex = CursorManager.SelectedIndex;
+                    var idx = CursorManager.Items.Skip(currentIndex).ToList()
+                        .FindIndex(w => w.Name.Contains(pattern));
+
+                    if (idx >= 0)
+                    {
+                        CursorManager.SelectedIndex += idx;
+                        return;
+                    }
+
+                    idx = CursorManager.Items.Take(currentIndex).ToList()
+                        .FindIndex(w => w.Name.Contains(pattern));
+
+                    if (idx < 0)
+                    {
+                        return;
+                    }
+
+                    CursorManager.SelectedIndex = idx;
+                }
+            });
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
