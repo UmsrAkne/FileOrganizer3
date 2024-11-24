@@ -27,6 +27,12 @@ namespace FileOrganizer3.ViewModels
             RequestClose?.Invoke(r);
         });
 
+        public DelegateCommand CancelCommand => new DelegateCommand(() =>
+        {
+            var r = new DialogResult(ButtonResult.Abort);
+            RequestClose?.Invoke(r);
+        });
+
         public bool CanCloseDialog() => true;
 
         public void OnDialogClosed()
