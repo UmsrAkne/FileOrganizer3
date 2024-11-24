@@ -212,6 +212,9 @@ namespace FileOrganizer3.Models
             });
         });
 
+        /// <summary>
+        /// ファイルを検索するためのページを出すコマンドです。
+        /// </summary>
         public DelegateCommand ShowSearchPageCommand => new DelegateCommand(() =>
         {
             var param = new DialogParameters { { nameof(InputPageViewModel.Message), "検索するパターンを入力してください。" }, };
@@ -236,6 +239,9 @@ namespace FileOrganizer3.Models
             });
         });
 
+        /// <summary>
+        /// SearchPattern プロパティを使ってファイル名を検索し、カーソルをマッチしたファイルまで移動させます。
+        /// </summary>
         public DelegateCommand SearchCommand => new DelegateCommand(() =>
         {
             if (string.IsNullOrWhiteSpace(SearchPattern))
