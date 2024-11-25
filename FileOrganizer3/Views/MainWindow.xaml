@@ -513,7 +513,7 @@
         </ListBox>
 
         <StatusBar Grid.Row="4">
-            <TextBlock Text="" />
+            <TextBlock Text="{Binding FileContainer.SearchPattern, StringFormat=/{0}}" />
         </StatusBar>
 
     </Grid>
