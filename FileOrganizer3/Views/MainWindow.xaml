@@ -315,11 +315,17 @@
 
                         <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
-                        <TextBox
+                        <Border
                             Grid.Column="4"
-                            Margin="0,1"
-                            Opacity="0.8"
-                            Text="{Binding TemporaryName}" />
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <TextBox
+                                Margin="0,1"
+                                BorderThickness="0"
+                                Opacity="0.8"
+                                Text="{Binding TemporaryName}" />
+                        </Border>
 
                         <TextBlock
                             Grid.Column="5"
