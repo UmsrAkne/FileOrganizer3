@@ -21,6 +21,7 @@ namespace FileOrganizer3.ViewModels
             PlayedFileContainer = new FileContainer(null);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
+            FileContainer.FileMarkedEventHandler += OnFileContainerOnFileMarkedEventHandler;
         }
 
         public MainWindowViewModel(IDialogService service)
@@ -30,6 +31,7 @@ namespace FileOrganizer3.ViewModels
             PlayedFileContainer = new FileContainer(service);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
+            FileContainer.FileMarkedEventHandler += OnFileContainerOnFileMarkedEventHandler;
         }
 
         public TextWrapper TextWrapper { get; private set; } = new ();
@@ -92,6 +94,30 @@ namespace FileOrganizer3.ViewModels
         {
             FileContainer.FileInfoWrappers =
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
+        }
+
+        /// <summary>
+        /// マークしたファイルのリストを更新するためのイベントハンドラーです。<br/>
+        /// FileContainer の中で、ファイルのマーク状態が変更された時に出るイベントにセットします。
+        /// </summary>
+        /// <param name="sender">イベントの発行元。このメソッドでは使用しません。</param>
+        /// <param name="e">マーク状態が変更された FileInfoWrapper が Items プロパティに格納されています。</param>
+        private void OnFileContainerOnFileMarkedEventHandler(object sender, FileMarkedEventArgs e)
+        {
+            foreach (var fileInfoWrapper in e.Items)
+            {
+                if (fileInfoWrapper.IsMarked)
+                {
+                    if (!MarkedFiles.FileInfoWrappers.Contains(fileInfoWrapper))
+                    {
+                        MarkedFiles.FileInfoWrappers.Add(fileInfoWrapper);
+                    }
+                }
+                else
+                {
+                    MarkedFiles.FileInfoWrappers.Remove(fileInfoWrapper);
+                }
+            }
         }
     }
 }

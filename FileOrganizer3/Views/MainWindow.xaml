@@ -522,7 +522,7 @@
             </TabItem>
 
             <TabItem Header="Marked files">
-                <ListBox AlternationCount="2" ItemsSource="{Binding MarkedFiles}">
+                <ListBox AlternationCount="2" ItemsSource="{Binding MarkedFiles.FileInfoWrappers}">
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <DataTemplate.Resources>

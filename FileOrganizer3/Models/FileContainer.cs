@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace FileOrganizer3.Models
             FileInfoWrappers = new ObservableCollection<FileInfoWrapper>();
             this.dialogService = dialogService;
         }
+
+        public event EventHandler<FileMarkedEventArgs> FileMarkedEventHandler;
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers
         {
@@ -74,17 +77,7 @@ namespace FileOrganizer3.Models
             var item = CursorManager.SelectedItem;
             item.IsMarked = !item.IsMarked;
 
-            if (item.IsMarked)
-            {
-                if (!MarkedFiles.Contains(item))
-                {
-                    MarkedFiles.Add(item);
-                }
-            }
-            else
-            {
-                MarkedFiles.Remove(item);
-            }
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(new List<FileInfoWrapper> { item, }));
         });
 
         public DelegateCommand<ExtractOption?> MarkFilesCommand => new DelegateCommand<ExtractOption?>((param) =>
@@ -94,11 +87,13 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            var targets = ExtractFiles(FileInfoWrappers, param.Value).ToList();
             foreach (var fileInfoWrapper in targets)
             {
                 fileInfoWrapper.IsMarked = true;
             }
+
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
         });
 
         /// <summary>
@@ -111,11 +106,13 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            var targets = ExtractFiles(FileInfoWrappers, param.Value).ToList();
             foreach (var fileInfoWrapper in targets)
             {
                 fileInfoWrapper.IsMarked = !fileInfoWrapper.IsMarked;
             }
+
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
         });
 
         public DelegateCommand IgnoreFileCommand => new (() =>
