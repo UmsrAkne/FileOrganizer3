@@ -40,6 +40,8 @@ namespace FileOrganizer3.Models
             }
         }
 
+        public ObservableCollection<FileInfoWrapper> MarkedFiles { get; } = new ();
+
         public int StartIndex
         {
             get => startIndex;
@@ -63,7 +65,20 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            CursorManager.SelectedItem.IsMarked = !CursorManager.SelectedItem.IsMarked;
+            var item = CursorManager.SelectedItem;
+            item.IsMarked = !item.IsMarked;
+
+            if (item.IsMarked)
+            {
+                if (!MarkedFiles.Contains(item))
+                {
+                    MarkedFiles.Add(item);
+                }
+            }
+            else
+            {
+                MarkedFiles.Remove(item);
+            }
         });
 
         public DelegateCommand<ExtractOption?> MarkFilesCommand => new DelegateCommand<ExtractOption?>((param) =>

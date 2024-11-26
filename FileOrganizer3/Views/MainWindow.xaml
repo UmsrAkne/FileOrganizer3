@@ -521,7 +521,77 @@
                 </ListBox>
             </TabItem>
 
-            <TabItem Header="Marked files" />
+            <TabItem Header="Marked files">
+                <ListBox AlternationCount="2" ItemsSource="{Binding FileContainer.MarkedFiles}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
+                                </Style>
+                            </DataTemplate.Resources>
+
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                                <Setter Property="Opacity" Value="0.25" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Width="50"
+                                    Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
+
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border
+                                            x:Name="Border"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="1">
+                                            <ContentPresenter />
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </TabItem>
 
         </TabControl>
         <StatusBar Grid.Row="4">
