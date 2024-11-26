@@ -49,6 +49,8 @@
 
                     <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
 
+                    <MenuItem Command="{Binding FileContainer.SearchCommand}" Header="入力中の検索ワードで再検索 (F)" />
+
                 </MenuItem>
 
                 <MenuItem Header="マーク">
@@ -159,7 +161,10 @@
 
                 <MenuItem Header="表示">
                     <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
+                    <MenuItem Command="{Binding FileContainer.ShowInputPageCommand}" Header="特定の行までジャンプする (Ctrl + J)" />
+                    <MenuItem Command="{Binding FileContainer.ShowSearchPageCommand}" Header="ファイル名を検索 (Ctrl + F)" />
                 </MenuItem>
+
                 <MenuItem Header="設定">
                     <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
                     <MenuItem Header="フォントサイズを設定する">
