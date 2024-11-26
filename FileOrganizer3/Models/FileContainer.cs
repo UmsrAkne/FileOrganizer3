@@ -58,6 +58,12 @@ namespace FileOrganizer3.Models
 
         public string SearchPattern { get => searchPattern; set => SetProperty(ref searchPattern, value); }
 
+        /// <summary>
+        /// このクラスが各種処理を行った際、アイテムにインデックスの割り振り・振り直しをするかどうかを設定します。
+        /// false に設定した場合、このクラスが FileInfoWrapper.Index を変更しなくなります。
+        /// </summary>
+        public bool AppendIndex { get; set; } = true;
+
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
         {
             if (CursorManager.SelectedItem == null)
@@ -281,6 +287,11 @@ namespace FileOrganizer3.Models
 
         public void ReIndex(IEnumerable<FileInfoWrapper> files)
         {
+            if (!AppendIndex)
+            {
+                return;
+            }
+
             var idx = StartIndex;
 
             foreach (var f in files)

@@ -38,6 +38,8 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer PlayedFileContainer { get; set; }
 
+        public FileContainer MarkedFiles { get; set; } = new (null) { AppendIndex = false, };
+
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
         /// <summary>
