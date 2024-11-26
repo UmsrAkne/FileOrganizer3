@@ -43,8 +43,6 @@ namespace FileOrganizer3.Models
             }
         }
 
-        public ObservableCollection<FileInfoWrapper> MarkedFiles { get; } = new ();
-
         public int StartIndex
         {
             get => startIndex;
