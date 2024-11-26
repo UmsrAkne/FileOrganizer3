@@ -1,8 +1,6 @@
-﻿using System.Windows.Controls;
-
-namespace FileOrganizer3.Views
+﻿namespace FileOrganizer3.Views
 {
-    public partial class InputPage : Page
+    public partial class InputPage
     {
         public InputPage()
         {

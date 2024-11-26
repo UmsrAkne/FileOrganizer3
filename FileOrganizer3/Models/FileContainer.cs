@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,8 @@ namespace FileOrganizer3.Models
             FileInfoWrappers = new ObservableCollection<FileInfoWrapper>();
             this.dialogService = dialogService;
         }
+
+        public event EventHandler<FileMarkedEventArgs> FileMarkedEventHandler;
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers
         {
@@ -56,6 +59,12 @@ namespace FileOrganizer3.Models
 
         public string SearchPattern { get => searchPattern; set => SetProperty(ref searchPattern, value); }
 
+        /// <summary>
+        /// このクラスが各種処理を行った際、アイテムにインデックスの割り振り・振り直しをするかどうかを設定します。
+        /// false に設定した場合、このクラスが FileInfoWrapper.Index を変更しなくなります。
+        /// </summary>
+        public bool AppendIndex { get; set; } = true;
+
         public DelegateCommand MarkCommand => new DelegateCommand(() =>
         {
             if (CursorManager.SelectedItem == null)
@@ -63,7 +72,10 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            CursorManager.SelectedItem.IsMarked = !CursorManager.SelectedItem.IsMarked;
+            var item = CursorManager.SelectedItem;
+            item.IsMarked = !item.IsMarked;
+
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(new List<FileInfoWrapper> { item, }));
         });
 
         public DelegateCommand<ExtractOption?> MarkFilesCommand => new DelegateCommand<ExtractOption?>((param) =>
@@ -73,11 +85,13 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            var targets = ExtractFiles(FileInfoWrappers, param.Value).ToList();
             foreach (var fileInfoWrapper in targets)
             {
                 fileInfoWrapper.IsMarked = true;
             }
+
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
         });
 
         /// <summary>
@@ -90,11 +104,13 @@ namespace FileOrganizer3.Models
                 return;
             }
 
-            var targets = ExtractFiles(FileInfoWrappers, param.Value);
+            var targets = ExtractFiles(FileInfoWrappers, param.Value).ToList();
             foreach (var fileInfoWrapper in targets)
             {
                 fileInfoWrapper.IsMarked = !fileInfoWrapper.IsMarked;
             }
+
+            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
         });
 
         public DelegateCommand IgnoreFileCommand => new (() =>
@@ -266,6 +282,11 @@ namespace FileOrganizer3.Models
 
         public void ReIndex(IEnumerable<FileInfoWrapper> files)
         {
+            if (!AppendIndex)
+            {
+                return;
+            }
+
             var idx = StartIndex;
 
             foreach (var f in files)

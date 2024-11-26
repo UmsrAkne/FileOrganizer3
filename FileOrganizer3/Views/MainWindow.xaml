@@ -49,6 +49,8 @@
 
                     <MenuItem Command="{Binding PlayedFileContainer.ClearFilesCommand}" Header="再生履歴をクリア" />
 
+                    <MenuItem Command="{Binding FileContainer.SearchCommand}" Header="入力中の検索ワードで再検索 (F)" />
+
                 </MenuItem>
 
                 <MenuItem Header="マーク">
@@ -159,7 +161,10 @@
 
                 <MenuItem Header="表示">
                     <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
+                    <MenuItem Command="{Binding FileContainer.ShowInputPageCommand}" Header="特定の行までジャンプする (Ctrl + J)" />
+                    <MenuItem Command="{Binding FileContainer.ShowSearchPageCommand}" Header="ファイル名を検索 (Ctrl + F)" />
                 </MenuItem>
+
                 <MenuItem Header="設定">
                     <MenuItem Command="{Binding ShowSettingPageCommand}" Header="設定画面を開く" />
                     <MenuItem Header="フォントサイズを設定する">
@@ -315,11 +320,17 @@
 
                         <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
-                        <TextBox
+                        <Border
                             Grid.Column="4"
-                            Margin="0,1"
-                            Opacity="0.8"
-                            Text="{Binding TemporaryName}" />
+                            BorderBrush="LightGray"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <TextBox
+                                Margin="0,1"
+                                BorderThickness="0"
+                                Opacity="0.8"
+                                Text="{Binding TemporaryName}" />
+                        </Border>
 
                         <TextBlock
                             Grid.Column="5"
@@ -385,135 +396,218 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch" />
 
-        <ListBox
-            x:Name="HistoryListBox"
-            Grid.Row="3"
-            AlternationCount="2"
-            ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
-            SelectedIndex="{Binding PlayedFileContainer.CursorManager.SelectedIndex}"
-            SelectedItem="{Binding PlayedFileContainer.CursorManager.SelectedItem}"
-            Visibility="{Binding AppearanceManager.HistoryListVisibility}">
+        <TabControl Grid.Row="3">
 
-            <b:Interaction.Behaviors>
-                <behaviors:ListBoxKeyDownBehavior />
-            </b:Interaction.Behaviors>
+            <TabItem Header="Play History">
+                <ListBox
+                    x:Name="HistoryListBox"
+                    AlternationCount="2"
+                    ItemsSource="{Binding PlayedFileContainer.FileInfoWrappers}"
+                    SelectedIndex="{Binding PlayedFileContainer.CursorManager.SelectedIndex}"
+                    SelectedItem="{Binding PlayedFileContainer.CursorManager.SelectedItem}"
+                    Visibility="{Binding AppearanceManager.HistoryListVisibility}">
 
-            <ListBox.InputBindings>
-                <KeyBinding Key="M" Command="{Binding PlayedFileContainer.MarkCommand}" />
-                <KeyBinding Key="I" Command="{Binding PlayedFileContainer.IgnoreFileCommand}" />
-                <KeyBinding
-                    Key="Return"
-                    Command="{Binding PlaySoundCommand}"
-                    CommandParameter="{Binding PlayedFileContainer.CursorManager.SelectedItem}" />
-            </ListBox.InputBindings>
+                    <b:Interaction.Behaviors>
+                        <behaviors:ListBoxKeyDownBehavior />
+                    </b:Interaction.Behaviors>
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <DataTemplate.Resources>
-                        <Style TargetType="TextBlock">
-                            <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
-                        </Style>
-                    </DataTemplate.Resources>
+                    <ListBox.InputBindings>
+                        <KeyBinding Key="M" Command="{Binding PlayedFileContainer.MarkCommand}" />
+                        <KeyBinding Key="I" Command="{Binding PlayedFileContainer.IgnoreFileCommand}" />
+                        <KeyBinding
+                            Key="Return"
+                            Command="{Binding PlaySoundCommand}"
+                            CommandParameter="{Binding PlayedFileContainer.CursorManager.SelectedItem}" />
+                    </ListBox.InputBindings>
 
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.25" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock
-                            Grid.Column="0"
-                            Width="50"
-                            Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="4,0"
-                            VerticalAlignment="Center"
-                            Text="＊">
-
-                            <TextBlock.Style>
-                                <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMarked}" Value="False">
-                                            <Setter Property="Visibility" Value="Hidden" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
                                 </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            </DataTemplate.Resources>
 
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Foreground="DarkOrange" Text="▶">
-                                <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Playing}" Value="False">
-                                                <Setter Property="Visibility" Value="Hidden" />
+                                            <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                                <Setter Property="Opacity" Value="0.25" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
-                                </TextBlock.Style>
-                            </TextBlock>
-                            <Border Width="0" Margin="10,0" />
-                        </StackPanel>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Column="3" Text="{Binding Name}" />
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Width="50"
+                                    Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
 
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="4,0"
+                                    VerticalAlignment="Center"
+                                    Text="＊">
 
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="ListBoxItem">
-                                <Border
-                                    x:Name="Border"
-                                    Background="Transparent"
-                                    BorderBrush="Transparent"
-                                    BorderThickness="1">
-                                    <ContentPresenter />
-                                </Border>
+                                    <TextBlock.Style>
+                                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMarked}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
 
-                                <ControlTemplate.Triggers>
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Foreground="DarkOrange" Text="▶">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Playing}" Value="False">
+                                                        <Setter Property="Visibility" Value="Hidden" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <Border Width="0" Margin="10,0" />
+                                </StackPanel>
 
-                                    <Trigger Property="ItemsControl.AlternationIndex" Value="1">
-                                        <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
-                                    </Trigger>
+                                <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="LightBlue" />
-                                        <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue" />
-                                    </Trigger>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
 
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="LightGray" />
-                                    </Trigger>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border
+                                            x:Name="Border"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="1">
+                                            <ContentPresenter />
+                                        </Border>
 
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </ListBox.ItemContainerStyle>
+                                        <ControlTemplate.Triggers>
 
-        </ListBox>
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                                            </Trigger>
 
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+
+                </ListBox>
+            </TabItem>
+
+            <TabItem Header="Marked files">
+                <ListBox AlternationCount="2" ItemsSource="{Binding MarkedFiles.FileInfoWrappers}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
+                                </Style>
+                            </DataTemplate.Resources>
+
+                            <Grid>
+                                <Grid.Style>
+                                    <Style TargetType="Grid">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                                <Setter Property="Opacity" Value="0.25" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Grid.Style>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Width="50"
+                                    Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
+
+                                <TextBlock Grid.Column="1" Text="{Binding Name}" />
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border
+                                            x:Name="Border"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent"
+                                            BorderThickness="1">
+                                            <ContentPresenter />
+                                        </Border>
+
+                                        <ControlTemplate.Triggers>
+
+                                            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                                                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightBlue" />
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="DodgerBlue" />
+                                            </Trigger>
+
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                            </Trigger>
+
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </TabItem>
+
+        </TabControl>
         <StatusBar Grid.Row="4">
-            <TextBlock Text="{Binding FileContainer.SearchPattern, StringFormat=/{0}}" />
+            <StackPanel>
+
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="{Binding FileContainer.FileInfoWrappers.Count, StringFormat=ファイル総数 : {0}}" />
+                </StackPanel>
+                <Border Height="0" Margin="0,2" />
+                <TextBlock Text="{Binding FileContainer.SearchPattern, StringFormat=/{0}}" />
+            </StackPanel>
         </StatusBar>
 
     </Grid>
