@@ -398,6 +398,7 @@
 
         <TabControl Grid.Row="3">
 
+            <!--  IDEでは検出されないが、 ElementName は ListBoxKeyDownBehavior で分岐に使用するので消さないでください。  -->
             <TabItem Header="Play History">
                 <ListBox
                     x:Name="HistoryListBox"
@@ -528,10 +529,15 @@
 
             <TabItem Header="Marked files">
                 <ListBox
+                    x:Name="MarkedFileListBox"
                     AlternationCount="2"
                     ItemsSource="{Binding MarkedFiles.FileInfoWrappers}"
                     SelectedIndex="{Binding MarkedFiles.CursorManager.SelectedIndex}"
                     SelectedItem="{Binding MarkedFiles.CursorManager.SelectedItem}">
+
+                    <b:Interaction.Behaviors>
+                        <behaviors:ListBoxKeyDownBehavior />
+                    </b:Interaction.Behaviors>
 
                     <ListBox.ItemTemplate>
                         <DataTemplate>
