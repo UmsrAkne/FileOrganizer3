@@ -93,9 +93,18 @@ namespace FileOrganizer3.Behaviors
                 return;
             }
 
-            var vm = listBox.Name == "MainListBox"
-                ? ((MainWindowViewModel)listBox.DataContext).FileContainer
-                : ((MainWindowViewModel)listBox.DataContext).PlayedFileContainer;
+            var vm = listBox.Name switch
+            {
+                "MainListBox" => ((MainWindowViewModel)listBox.DataContext).FileContainer,
+                "MarkedFileListBox" => ((MainWindowViewModel)listBox.DataContext).MarkedFiles,
+                "HistoryListBox" => ((MainWindowViewModel)listBox.DataContext).PlayedFileContainer,
+                _ => null,
+            };
+
+            if (vm == null)
+            {
+                return;
+            }
 
             switch (e.Key)
             {
