@@ -160,7 +160,7 @@
                 </MenuItem>
 
                 <MenuItem Header="表示">
-                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
+                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="フッターパネル折りたたむ (Ctrl + H)" />
                     <MenuItem Command="{Binding FileContainer.ShowInputPageCommand}" Header="特定の行までジャンプする (Ctrl + J)" />
                     <MenuItem Command="{Binding FileContainer.ShowSearchPageCommand}" Header="ファイル名を検索 (Ctrl + F)" />
                 </MenuItem>
