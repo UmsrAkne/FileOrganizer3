@@ -19,6 +19,8 @@ namespace FileOrganizer3.ViewModels
 
         DelegateCommand<FileInfoWrapper> PlaySoundCommand { get; }
 
+        DelegateCommand StopSoundCommand { get; }
+
         DelegateCommand ShowSettingPageCommand { get; }
     }
 }

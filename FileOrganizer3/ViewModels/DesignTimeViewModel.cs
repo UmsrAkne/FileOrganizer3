@@ -37,6 +37,10 @@ namespace FileOrganizer3.ViewModels
         {
         });
 
+        public DelegateCommand StopSoundCommand => new DelegateCommand(() =>
+        {
+        });
+
         public DelegateCommand ShowSettingPageCommand { get; } = new (() => { });
 }
 }

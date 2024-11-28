@@ -24,6 +24,11 @@
             Key="H"
             Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}"
             Modifiers="Control" />
+
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding StopSoundCommand}"
+            Modifiers="Shift" />
     </Window.InputBindings>
 
     <b:Interaction.Behaviors>
