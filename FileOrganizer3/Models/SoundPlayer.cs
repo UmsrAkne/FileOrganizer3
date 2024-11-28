@@ -51,6 +51,16 @@ namespace FileOrganizer3.Models
             waveOut.Play();
         }
 
+        public void Stop()
+        {
+            waveOut.Stop();
+            if (PlayingFileInfoWrapper != null)
+            {
+                PlayingFileInfoWrapper.Playing = false;
+                PlayingFileInfoWrapper = null;
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);

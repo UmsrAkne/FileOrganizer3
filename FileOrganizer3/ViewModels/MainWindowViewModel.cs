@@ -73,6 +73,14 @@ namespace FileOrganizer3.ViewModels
             soundPlayer.PlayAudio(param);
         });
 
+        /// <summary>
+        /// 再生中の音声を停止します。再生していない時に呼び出した場合は何も起こりません。
+        /// </summary>
+        public DelegateCommand StopSoundCommand => new DelegateCommand(() =>
+        {
+            soundPlayer.Stop();
+        });
+
         public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });

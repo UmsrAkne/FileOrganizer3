@@ -24,6 +24,11 @@
             Key="H"
             Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}"
             Modifiers="Control" />
+
+        <KeyBinding
+            Key="Escape"
+            Command="{Binding StopSoundCommand}"
+            Modifiers="Shift" />
     </Window.InputBindings>
 
     <b:Interaction.Behaviors>
@@ -160,7 +165,7 @@
                 </MenuItem>
 
                 <MenuItem Header="表示">
-                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="再生履歴ウィンドウを折りたたむ (Ctrl + H)" />
+                    <MenuItem Command="{Binding AppearanceManager.ToggleHistoryListVisibilityCommand}" Header="フッターパネル折りたたむ (Ctrl + H)" />
                     <MenuItem Command="{Binding FileContainer.ShowInputPageCommand}" Header="特定の行までジャンプする (Ctrl + J)" />
                     <MenuItem Command="{Binding FileContainer.ShowSearchPageCommand}" Header="ファイル名を検索 (Ctrl + F)" />
                 </MenuItem>
@@ -615,6 +620,7 @@
 
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding FileContainer.FileInfoWrappers.Count, StringFormat=ファイル総数 : {0}}" />
+                    <TextBlock Margin="10,0" Text="{Binding MarkedFiles.FileInfoWrappers.Count, StringFormat=マーク数 : {0}}" />
                 </StackPanel>
                 <Border Height="0" Margin="0,2" />
                 <TextBlock Text="{Binding FileContainer.SearchPattern, StringFormat=/{0}}" />
