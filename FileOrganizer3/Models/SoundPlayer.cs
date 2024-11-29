@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using NAudio.Vorbis;
 using NAudio.Wave;
 
@@ -33,6 +34,12 @@ namespace FileOrganizer3.Models
             }
 
             PlayingFileInfoWrapper = fileInfoWrapper;
+
+            if (!File.Exists(fileInfoWrapper.FullPath))
+            {
+                // ファイルが存在しない場合でも、再生に関する情報は更新する。
+                return;
+            }
 
             reader = fileInfoWrapper.Extension switch
             {
