@@ -18,12 +18,14 @@ namespace FileOrganizer3.Behaviors
         {
             base.OnAttached();
             AssociatedObject.KeyDown += OnKeyDown;
+            AssociatedObject.SelectionChanged += OnSelectionChanged;
         }
 
         protected override void OnDetaching()
         {
             base.OnDetaching();
             AssociatedObject.KeyDown -= OnKeyDown;
+            AssociatedObject.SelectionChanged -= OnSelectionChanged;
         }
 
         private static ScrollViewer GetScrollViewer(DependencyObject obj)
@@ -170,7 +172,7 @@ namespace FileOrganizer3.Behaviors
                             items.Insert(index + 1, item);
                             listBox.SelectedIndex = index + 1;
                             listBox.SelectedItem = item;
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
 
                         break;
@@ -190,7 +192,7 @@ namespace FileOrganizer3.Behaviors
                             items.Insert(index - 1, item);
                             listBox.SelectedIndex = index - 1;
                             listBox.SelectedItem = item;
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
 
                         break;
@@ -218,7 +220,7 @@ namespace FileOrganizer3.Behaviors
                         if (listBox.ItemsSource is ObservableCollection<FileInfoWrapper> items)
                         {
                             items.RemoveAt(index);
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
                     }
 
@@ -234,6 +236,23 @@ namespace FileOrganizer3.Behaviors
             // {
             //     // ビューモデルの処理を書く。
             // }
+        }
+
+        private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (sender is not ListBox listBox)
+            {
+                return;
+            }
+
+            var item = listBox.Items[listBox.SelectedIndex];
+
+            if (item == null)
+            {
+                return;
+            }
+
+            listBox.ScrollIntoView(item);
         }
     }
 }
