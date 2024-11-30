@@ -172,7 +172,7 @@ namespace FileOrganizer3.Behaviors
                             items.Insert(index + 1, item);
                             listBox.SelectedIndex = index + 1;
                             listBox.SelectedItem = item;
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
 
                         break;
@@ -192,7 +192,7 @@ namespace FileOrganizer3.Behaviors
                             items.Insert(index - 1, item);
                             listBox.SelectedIndex = index - 1;
                             listBox.SelectedItem = item;
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
 
                         break;
@@ -220,7 +220,7 @@ namespace FileOrganizer3.Behaviors
                         if (listBox.ItemsSource is ObservableCollection<FileInfoWrapper> items)
                         {
                             items.RemoveAt(index);
-                            vm?.ReIndex(items);
+                            vm.ReIndex(items);
                         }
                     }
 
