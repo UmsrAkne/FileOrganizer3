@@ -21,7 +21,7 @@ namespace FileOrganizer3.ViewModels
             PlayedFileContainer = new FileContainer(null);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
-            FileContainer.FileMarkedEventHandler += OnFileContainerOnFileMarkedEventHandler;
+            FileContainer.FileStatusChangedEventHandler += OnFileContainerOnFileStatusChangedEventHandler;
         }
 
         public MainWindowViewModel(IDialogService service)
@@ -31,7 +31,7 @@ namespace FileOrganizer3.ViewModels
             PlayedFileContainer = new FileContainer(service);
             SetDummyData();
             AppearanceManager.FontSize = AppSettings.Load().FontSize;
-            FileContainer.FileMarkedEventHandler += OnFileContainerOnFileMarkedEventHandler;
+            FileContainer.FileStatusChangedEventHandler += OnFileContainerOnFileStatusChangedEventHandler;
         }
 
         public TextWrapper TextWrapper { get; private set; } = new ();
@@ -41,6 +41,8 @@ namespace FileOrganizer3.ViewModels
         public FileContainer PlayedFileContainer { get; set; }
 
         public FileContainer MarkedFiles { get; set; } = new (null) { AppendIndex = false, };
+
+        public FileContainer IgnoredFiles { get; set; } = new (null) { AppendIndex = false, };
 
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
@@ -105,12 +107,12 @@ namespace FileOrganizer3.ViewModels
         }
 
         /// <summary>
-        /// マークしたファイルのリストを更新するためのイベントハンドラーです。<br/>
+        /// マークしたファイル、無視状態を変更したファイルのリストを更新するためのイベントハンドラーです。<br/>
         /// FileContainer の中で、ファイルのマーク状態が変更された時に出るイベントにセットします。
         /// </summary>
         /// <param name="sender">イベントの発行元。このメソッドでは使用しません。</param>
         /// <param name="e">マーク状態が変更された FileInfoWrapper が Items プロパティに格納されています。</param>
-        private void OnFileContainerOnFileMarkedEventHandler(object sender, FileMarkedEventArgs e)
+        private void OnFileContainerOnFileStatusChangedEventHandler(object sender, FileStatusChangedEventArgs e)
         {
             foreach (var fileInfoWrapper in e.Items)
             {
@@ -124,6 +126,18 @@ namespace FileOrganizer3.ViewModels
                 else
                 {
                     MarkedFiles.FileInfoWrappers.Remove(fileInfoWrapper);
+                }
+
+                if (fileInfoWrapper.IsIgnored)
+                {
+                    if (!IgnoredFiles.FileInfoWrappers.Contains(fileInfoWrapper))
+                    {
+                        IgnoredFiles.FileInfoWrappers.Add(fileInfoWrapper);
+                    }
+                }
+                else
+                {
+                    IgnoredFiles.FileInfoWrappers.Remove(fileInfoWrapper);
                 }
             }
         }
