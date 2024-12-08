@@ -122,6 +122,9 @@ namespace FileOrganizer3.Models
 
             CursorManager.SelectedItem.IsIgnored = !CursorManager.SelectedItem.IsIgnored;
             ReIndex(FileInfoWrappers);
+
+            FileStatusChangedEventHandler?.Invoke(
+                this, new FileStatusChangedEventArgs(new List<FileInfoWrapper>() { CursorManager.SelectedItem, }));
         });
 
         public DelegateCommand<RenameOption> AppendTextToNameCommand => new DelegateCommand<RenameOption>((option) =>

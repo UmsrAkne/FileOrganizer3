@@ -42,6 +42,8 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer MarkedFiles { get; set; } = new (null) { AppendIndex = false, };
 
+        public FileContainer IgnoredFiles { get; set; } = new (null) { AppendIndex = false, };
+
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
         /// <summary>
@@ -124,6 +126,18 @@ namespace FileOrganizer3.ViewModels
                 else
                 {
                     MarkedFiles.FileInfoWrappers.Remove(fileInfoWrapper);
+                }
+
+                if (fileInfoWrapper.IsIgnored)
+                {
+                    if (!IgnoredFiles.FileInfoWrappers.Contains(fileInfoWrapper))
+                    {
+                        IgnoredFiles.FileInfoWrappers.Add(fileInfoWrapper);
+                    }
+                }
+                else
+                {
+                    IgnoredFiles.FileInfoWrappers.Remove(fileInfoWrapper);
                 }
             }
         }
