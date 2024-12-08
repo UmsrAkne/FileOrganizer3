@@ -24,7 +24,7 @@ namespace FileOrganizer3.Models
             this.dialogService = dialogService;
         }
 
-        public event EventHandler<FileMarkedEventArgs> FileMarkedEventHandler;
+        public event EventHandler<FileStatusChangedEventArgs> FileStatusChangedEventHandler;
 
         public ObservableCollection<FileInfoWrapper> FileInfoWrappers
         {
@@ -75,7 +75,7 @@ namespace FileOrganizer3.Models
             var item = CursorManager.SelectedItem;
             item.IsMarked = !item.IsMarked;
 
-            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(new List<FileInfoWrapper> { item, }));
+            FileStatusChangedEventHandler?.Invoke(this, new FileStatusChangedEventArgs(new List<FileInfoWrapper> { item, }));
         });
 
         public DelegateCommand<ExtractOption?> MarkFilesCommand => new DelegateCommand<ExtractOption?>((param) =>
@@ -91,7 +91,7 @@ namespace FileOrganizer3.Models
                 fileInfoWrapper.IsMarked = true;
             }
 
-            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
+            FileStatusChangedEventHandler?.Invoke(this, new FileStatusChangedEventArgs(targets));
         });
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace FileOrganizer3.Models
                 fileInfoWrapper.IsMarked = !fileInfoWrapper.IsMarked;
             }
 
-            FileMarkedEventHandler?.Invoke(this, new FileMarkedEventArgs(targets));
+            FileStatusChangedEventHandler?.Invoke(this, new FileStatusChangedEventArgs(targets));
         });
 
         public DelegateCommand IgnoreFileCommand => new (() =>
