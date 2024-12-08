@@ -12,6 +12,7 @@ namespace FileOrganizer3.Behaviors
 {
     public class ListBoxKeyDownBehavior : Behavior<ListBox>
     {
+        private static int lastItemHeight;
         private ScrollViewer scrollViewer;
 
         protected override void OnAttached()
@@ -71,7 +72,7 @@ namespace FileOrganizer3.Behaviors
 
             if (itemContainerGenerator.ContainerFromIndex(0) is not FrameworkElement firstItem)
             {
-                return 0;
+                return lastItemHeight;
             }
 
             // アイテムの高さ
@@ -79,8 +80,9 @@ namespace FileOrganizer3.Behaviors
 
             // ScrollViewer のビューポート高さから表示可能なアイテム数を計算
             var viewportHeight = scrollViewer.ActualHeight;
+            lastItemHeight = (int)(viewportHeight / itemHeight);
 
-            return (int)(viewportHeight / itemHeight);
+            return lastItemHeight;
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
