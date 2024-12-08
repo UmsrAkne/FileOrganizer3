@@ -27,6 +27,8 @@ namespace FileOrganizer3.ViewModels
 
         public FileContainer MarkedFiles { get; set; } = new (null);
 
+        public FileContainer IgnoredFiles { get; set; } = new (null);
+
         public AppearanceManager AppearanceManager { get; set; } = new ();
 
         public DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; } = new ((_) =>

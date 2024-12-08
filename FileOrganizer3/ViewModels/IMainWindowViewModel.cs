@@ -13,6 +13,8 @@ namespace FileOrganizer3.ViewModels
 
         FileContainer MarkedFiles { get; set; }
 
+        FileContainer IgnoredFiles { get; set; }
+
         AppearanceManager AppearanceManager { get; set; }
 
         DelegateCommand<FileInfoWrapper> PlaySoundAndSaveCommand { get; }

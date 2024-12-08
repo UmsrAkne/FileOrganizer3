@@ -646,6 +646,7 @@
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{Binding FileContainer.FileInfoWrappers.Count, StringFormat=ファイル総数 : {0}}" />
                     <TextBlock Margin="10,0" Text="{Binding MarkedFiles.FileInfoWrappers.Count, StringFormat=マーク数 : {0}}" />
+                    <TextBlock Margin="10,0" Text="{Binding IgnoredFiles.FileInfoWrappers.Count, StringFormat=無視数 : {0}}" />
                 </StackPanel>
                 <Border Height="0" Margin="0,2" />
                 <TextBlock Text="{Binding FileContainer.SearchPattern, StringFormat=/{0}}" />
