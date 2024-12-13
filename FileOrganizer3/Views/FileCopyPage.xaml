@@ -24,7 +24,7 @@
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource BasicFontSize}"
                 Text="コピーするファイルを入力してください :" />
-            <TextBox FontSize="{StaticResource BasicFontSize}" />
+            <TextBox FontSize="{StaticResource BasicFontSize}" Text="{Binding FileListText, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
 
         <DockPanel Grid.Row="1" Margin="0,10">
@@ -33,17 +33,23 @@
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource BasicFontSize}"
                 Text="コピー先を入力してください :" />
-            <TextBox FontSize="{StaticResource BasicFontSize}" />
+            <TextBox FontSize="{StaticResource BasicFontSize}" Text="{Binding FileDestinationPath, UpdateSourceTrigger=PropertyChanged}" />
         </DockPanel>
 
         <StackPanel
             Grid.Row="2"
             HorizontalAlignment="Right"
             Orientation="Horizontal">
-            <Button Margin="5,0" Padding="20,1">
+            <Button
+                Margin="5,0"
+                Padding="20,1"
+                Command="{Binding CopyFilesCommand}">
                 <TextBlock FontSize="{StaticResource BasicFontSize}" Text="Copy" />
             </Button>
-            <Button Margin="10,0" Padding="10,1">
+            <Button
+                Margin="10,0"
+                Padding="10,1"
+                Command="{Binding CloseCommand}">
                 <TextBlock FontSize="{StaticResource BasicFontSize}" Text="Close" />
             </Button>
         </StackPanel>
@@ -54,7 +60,7 @@
                 DockPanel.Dock="Top"
                 FontSize="{StaticResource BasicFontSize}"
                 Text="ログ :" />
-            <TextBlock FontSize="{StaticResource BasicFontSize}" />
+            <TextBlock FontSize="{StaticResource BasicFontSize}" Text="{Binding LogText}" />
         </DockPanel>
     </Grid>
 </Page>
