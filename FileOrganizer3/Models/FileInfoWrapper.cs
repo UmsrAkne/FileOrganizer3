@@ -96,5 +96,10 @@ namespace FileOrganizer3.Models
             RaisePropertyChanged(nameof(IsSoundFile));
             RaisePropertyChanged(nameof(Extension));
         }
+
+        public void CopyTo(string destinationPath)
+        {
+            FileInfo.CopyTo(destinationPath);
+        }
     }
 }
