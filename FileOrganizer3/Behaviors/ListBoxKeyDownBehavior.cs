@@ -242,7 +242,7 @@ namespace FileOrganizer3.Behaviors
 
         private void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (sender is not ListBox listBox)
+            if (sender is not ListBox listBox || listBox.Items.Count == 0)
             {
                 return;
             }
