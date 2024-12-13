@@ -22,9 +22,7 @@ namespace FileOrganizer3.ViewModels
 
         public string FileListText { get => fileListText; set => SetProperty(ref fileListText, value); }
 
-        public string LogText { get => logText; set => SetProperty(ref logText, value); }
-
-        public List<FileInfoWrapper> FileInfoWrappers { get; set; }
+        public string LogText { get => logText; private set => SetProperty(ref logText, value); }
 
         public string FileDestinationPath
         {
@@ -47,6 +45,8 @@ namespace FileOrganizer3.ViewModels
             var lines = FileListText.Split(new[] { "\r\n", "\n", "\r", }, StringSplitOptions.RemoveEmptyEntries);
             CopyFiles(lines, FileInfoWrappers, FileDestinationPath);
         });
+
+        private List<FileInfoWrapper> FileInfoWrappers { get; set; }
 
         public bool CanCloseDialog() => true;
 
