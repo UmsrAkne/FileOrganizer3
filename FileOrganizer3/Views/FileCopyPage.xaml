@@ -1,0 +1,69 @@
+﻿<Page
+    x:Class="FileOrganizer3.Views.FileCopyPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
+    Title="FileCopyPage"
+    Width="600"
+    Height="400"
+    d:DataContext="{d:DesignInstance viewModels:FileCopyPageViewModel}"
+    mc:Ignorable="d">
+    <Grid Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0">
+            <TextBlock
+                Margin="0,2"
+                DockPanel.Dock="Top"
+                FontSize="{StaticResource BasicFontSize}"
+                Text="コピーするファイルを入力してください :" />
+            <TextBox
+                AcceptsReturn="True"
+                FontSize="{StaticResource BasicFontSize}"
+                Text="{Binding FileListText, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+
+        <DockPanel Grid.Row="1" Margin="0,10">
+            <TextBlock
+                Margin="0,2"
+                DockPanel.Dock="Top"
+                FontSize="{StaticResource BasicFontSize}"
+                Text="コピー先を入力してください :" />
+            <TextBox FontSize="{StaticResource BasicFontSize}" Text="{Binding FileDestinationPath, UpdateSourceTrigger=PropertyChanged}" />
+        </DockPanel>
+
+        <StackPanel
+            Grid.Row="2"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal">
+            <Button
+                Margin="5,0"
+                Padding="20,1"
+                Command="{Binding CopyFilesCommand}">
+                <TextBlock FontSize="{StaticResource BasicFontSize}" Text="Copy" />
+            </Button>
+            <Button
+                Margin="10,0"
+                Padding="10,1"
+                Command="{Binding CloseCommand}">
+                <TextBlock FontSize="{StaticResource BasicFontSize}" Text="Close" />
+            </Button>
+        </StackPanel>
+
+        <DockPanel Grid.Row="3" Margin="0,10">
+            <TextBlock
+                Margin="0,2"
+                DockPanel.Dock="Top"
+                FontSize="{StaticResource BasicFontSize}"
+                Text="ログ :" />
+            <TextBlock FontSize="{StaticResource BasicFontSize}" Text="{Binding LogText}" />
+        </DockPanel>
+    </Grid>
+</Page>

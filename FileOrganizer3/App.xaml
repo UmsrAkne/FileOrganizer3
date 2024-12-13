@@ -3,9 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:FileOrganizer3.Views.Converters"
-    xmlns:prism="http://prismlibrary.com/">
+    xmlns:prism="http://prismlibrary.com/"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib">
     <Application.Resources>
         <SolidColorBrush x:Key="BgColorBrush" Color="DimGray" />
         <converters:ZeroPaddingConverter x:Key="ZeroPaddingConverter" />
+        <sys:Double x:Key="BasicFontSize">15</sys:Double>
     </Application.Resources>
 </prism:PrismApplication>

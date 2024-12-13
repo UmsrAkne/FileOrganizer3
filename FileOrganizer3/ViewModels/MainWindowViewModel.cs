@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using FileOrganizer3.Models;
 using FileOrganizer3.Views;
 using Prism.Commands;
@@ -86,6 +87,16 @@ namespace FileOrganizer3.ViewModels
         public DelegateCommand ShowSettingPageCommand => new DelegateCommand(() =>
         {
             dialogService.ShowDialog(nameof(SettingPage), new DialogParameters(), (_) => { });
+        });
+
+        public DelegateCommand ShowFileCopyPageCommand => new DelegateCommand(() =>
+        {
+            var param = new DialogParameters
+            {
+                { nameof(FileContainer.FileInfoWrappers), FileContainer.FileInfoWrappers.ToList() },
+            };
+
+            dialogService.ShowDialog(nameof(FileCopyPage), param, (_) => { });
         });
 
         public void Dispose()

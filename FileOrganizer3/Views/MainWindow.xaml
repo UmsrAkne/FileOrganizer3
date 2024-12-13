@@ -56,6 +56,8 @@
 
                     <MenuItem Command="{Binding FileContainer.SearchCommand}" Header="入力中の検索ワードで再検索 (F)" />
 
+                    <MenuItem Command="{Binding ShowFileCopyPageCommand}" Header="ファイルコピーダイアログを表示" />
+
                 </MenuItem>
 
                 <MenuItem Header="マーク">

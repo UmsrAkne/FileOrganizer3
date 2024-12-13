@@ -19,6 +19,7 @@ namespace FileOrganizer3
         {
             containerRegistry.RegisterDialog<SettingPage, SettingPageViewModel>();
             containerRegistry.RegisterDialog<InputPage, InputPageViewModel>();
+            containerRegistry.RegisterDialog<FileCopyPage, FileCopyPageViewModel>();
         }
     }
 }
