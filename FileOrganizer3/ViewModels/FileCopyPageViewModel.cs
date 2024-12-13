@@ -63,7 +63,8 @@ namespace FileOrganizer3.ViewModels
         }
 
         /// <summary>
-        /// fileNames の名前を、sourceFileInfos の中から検索して destinationPath にコピーします。
+        /// fileNames の名前を、sourceFileInfos の中から検索して destinationPath にコピーします。<br/>
+        /// また、必要に応じて LogText プロパティにログを出力します。
         /// </summary>
         /// <param name="fileNames">コピーの対象とするファイル名</param>
         /// <param name="sourceFileInfos">コピーの対象を含む FileInfo のリスト</param>
@@ -78,6 +79,10 @@ namespace FileOrganizer3.ViewModels
                 if (fileInfos.TryGetValue(fileName, out var fileInfoWrapper))
                 {
                     fileInfoWrapper.CopyTo(destinationPath);
+                }
+                else
+                {
+                    LogText += $"{fileName} がソースファイルリストに含まれていないため、コピーできませんでした。\n";
                 }
             }
         }
