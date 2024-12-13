@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using FileOrganizer3.Models;
 using Prism.Commands;
@@ -38,6 +39,13 @@ namespace FileOrganizer3.ViewModels
 
         public DelegateCommand CopyFilesCommand => new DelegateCommand(() =>
         {
+            if (string.IsNullOrWhiteSpace(FileListText) || FileInfoWrappers == null || FileInfoWrappers.Count == 0 || !Directory.Exists(FileDestinationPath))
+            {
+                return;
+            }
+
+            var lines = FileListText.Split(new[] { "\r\n", "\n", "\r", }, StringSplitOptions.RemoveEmptyEntries);
+            CopyFiles(lines, FileInfoWrappers, FileDestinationPath);
         });
 
         public bool CanCloseDialog() => true;
@@ -48,6 +56,10 @@ namespace FileOrganizer3.ViewModels
 
         public void OnDialogOpened(IDialogParameters parameters)
         {
+            if (parameters.TryGetValue<List<FileInfoWrapper>>(nameof(FileContainer.FileInfoWrappers), out var fw))
+            {
+                FileInfoWrappers = fw;
+            }
         }
 
         /// <summary>

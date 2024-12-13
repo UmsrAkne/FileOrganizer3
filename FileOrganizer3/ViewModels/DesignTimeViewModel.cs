@@ -44,5 +44,7 @@ namespace FileOrganizer3.ViewModels
         });
 
         public DelegateCommand ShowSettingPageCommand { get; } = new (() => { });
-}
+
+        public DelegateCommand ShowFileCopyPageCommand { get; } = new (() => { });
+    }
 }

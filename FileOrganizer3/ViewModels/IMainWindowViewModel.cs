@@ -24,5 +24,7 @@ namespace FileOrganizer3.ViewModels
         DelegateCommand StopSoundCommand { get; }
 
         DelegateCommand ShowSettingPageCommand { get; }
+
+        DelegateCommand ShowFileCopyPageCommand { get; }
     }
 }

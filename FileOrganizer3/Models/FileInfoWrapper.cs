@@ -99,7 +99,7 @@ namespace FileOrganizer3.Models
 
         public void CopyTo(string destinationPath)
         {
-            FileInfo.CopyTo(destinationPath);
+            FileInfo.CopyTo($"{destinationPath}\\{FileInfo.Name}");
         }
     }
 }
