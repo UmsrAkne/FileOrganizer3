@@ -12,7 +12,7 @@ namespace FileOrganizer3.ViewModels
     // ReSharper disable once ClassNeverInstantiated.Global
     public class FileCopyPageViewModel : BindableBase, IDialogAware
     {
-        private string fileListText;
+        private string fileListText = string.Empty;
         private string logText;
         private string fileDestinationPath;
 
@@ -44,6 +44,24 @@ namespace FileOrganizer3.ViewModels
 
             var lines = FileListText.Split(new[] { "\r\n", "\n", "\r", }, StringSplitOptions.RemoveEmptyEntries);
             CopyFiles(lines, FileInfoWrappers, FileDestinationPath);
+        });
+
+        /// <summary>
+        /// FileInfoWrappers の中から、マーク済みのファイル名のリストをテキストボックスに出力します。<br/>
+        /// ファイルリストは一つずつ改行で区切られたフォーマットで出力されます。
+        /// </summary>
+        public DelegateCommand WriteMarkedFilesToTextBoxCommand => new DelegateCommand(() =>
+        {
+            var newText = FileInfoWrappers.Where(f => f.IsMarked).Select(f => f.Name);
+
+            if (string.IsNullOrWhiteSpace(FileListText) || FileListText.EndsWith(Environment.NewLine))
+            {
+                FileListText += string.Join(Environment.NewLine, newText);
+            }
+            else
+            {
+                FileListText += $"{Environment.NewLine}{string.Join(Environment.NewLine, newText)}";
+            }
         });
 
         private List<FileInfoWrapper> FileInfoWrappers { get; set; }
