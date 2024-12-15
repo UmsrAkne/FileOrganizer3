@@ -291,95 +291,102 @@
                             <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
                         </Style>
                     </DataTemplate.Resources>
-
-                    <Grid>
-                        <Grid.Style>
-                            <Style TargetType="Grid">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                        <Setter Property="Opacity" Value="0.25" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </Grid.Style>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-
-                        <TextBlock
-                            Grid.Column="0"
-                            Width="50"
-                            Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
-
-                        <TextBlock
-                            Grid.Column="1"
-                            Margin="4,0"
-                            VerticalAlignment="Center"
-                            Text="＊">
-
-                            <TextBlock.Style>
-                                <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                    <ContentControl>
+                        <b:Interaction.Triggers>
+                            <b:EventTrigger EventName="MouseDoubleClick">
+                                <b:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.PlaySoundAndSaveCommand}" CommandParameter="{Binding}" />
+                            </b:EventTrigger>
+                        </b:Interaction.Triggers>
+                        <Grid>
+                            <Grid.Style>
+                                <Style TargetType="Grid">
                                     <Style.Triggers>
-                                        <DataTrigger Binding="{Binding IsMarked}" Value="False">
-                                            <Setter Property="Visibility" Value="Hidden" />
+                                        <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                            <Setter Property="Opacity" Value="0.25" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            </Grid.Style>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        <StackPanel Grid.Column="2">
-                            <TextBlock Foreground="DarkOrange" Text="▶">
+                            <TextBlock
+                                Grid.Column="0"
+                                Width="50"
+                                Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
+
+                            <TextBlock
+                                Grid.Column="1"
+                                Margin="4,0"
+                                VerticalAlignment="Center"
+                                Text="＊">
+
                                 <TextBlock.Style>
-                                    <Style TargetType="TextBlock">
+                                    <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
                                         <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Playing}" Value="False">
+                                            <DataTrigger Binding="{Binding IsMarked}" Value="False">
                                                 <Setter Property="Visibility" Value="Hidden" />
                                             </DataTrigger>
                                         </Style.Triggers>
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <Border Width="0" Margin="10,0" />
-                        </StackPanel>
 
-                        <TextBlock Grid.Column="3" Text="{Binding Name}" />
+                            <StackPanel Grid.Column="2">
+                                <TextBlock Foreground="DarkOrange" Text="▶">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Playing}" Value="False">
+                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                                <Border Width="0" Margin="10,0" />
+                            </StackPanel>
 
-                        <Border
-                            Grid.Column="4"
-                            BorderBrush="LightGray"
-                            BorderThickness="1"
-                            CornerRadius="3">
-                            <TextBox
-                                Margin="0,1"
-                                BorderThickness="0"
-                                Opacity="0.8"
-                                Text="{Binding TemporaryName}" />
-                        </Border>
+                            <TextBlock Grid.Column="3" Text="{Binding Name}" />
 
-                        <TextBlock
-                            Grid.Column="5"
-                            Width="40"
-                            Padding="8,0,0,0"
-                            FontSize="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}"
-                            Text="{Binding PlayCount, StringFormat={}{0:D3}}">
-                            <TextBlock.Style>
-                                <Style TargetType="TextBlock">
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding PlayCount}" Value="0">
-                                            <Setter Property="Visibility" Value="Hidden" />
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBlock.Style>
-                        </TextBlock>
+                            <Border
+                                Grid.Column="4"
+                                BorderBrush="LightGray"
+                                BorderThickness="1"
+                                CornerRadius="3">
+                                <TextBox
+                                    Margin="0,1"
+                                    BorderThickness="0"
+                                    Opacity="0.8"
+                                    Text="{Binding TemporaryName}" />
+                            </Border>
 
-                    </Grid>
+                            <TextBlock
+                                Grid.Column="5"
+                                Width="40"
+                                Padding="8,0,0,0"
+                                FontSize="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}"
+                                Text="{Binding PlayCount, StringFormat={}{0:D3}}">
+                                <TextBlock.Style>
+                                    <Style TargetType="TextBlock">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding PlayCount}" Value="0">
+                                                <Setter Property="Visibility" Value="Hidden" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBlock.Style>
+                            </TextBlock>
+
+                        </Grid>
+                    </ContentControl>
+
                 </DataTemplate>
             </ListBox.ItemTemplate>
 
@@ -458,64 +465,73 @@
                                     <Setter Property="FontSize" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.AppearanceManager.FontSize}" />
                                 </Style>
                             </DataTemplate.Resources>
+                            <ContentControl>
 
-                            <Grid>
-                                <Grid.Style>
-                                    <Style TargetType="Grid">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding IsIgnored}" Value="True">
-                                                <Setter Property="Opacity" Value="0.25" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Grid.Style>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                                <b:Interaction.Triggers>
+                                    <b:EventTrigger EventName="MouseDoubleClick">
+                                        <b:InvokeCommandAction Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListBox}, Path=DataContext.PlaySoundCommand}" CommandParameter="{Binding}" />
+                                    </b:EventTrigger>
+                                </b:Interaction.Triggers>
 
-                                <TextBlock
-                                    Grid.Column="0"
-                                    Width="50"
-                                    Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
-
-                                <TextBlock
-                                    Grid.Column="1"
-                                    Margin="4,0"
-                                    VerticalAlignment="Center"
-                                    Text="＊">
-
-                                    <TextBlock.Style>
-                                        <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
+                                <Grid>
+                                    <Grid.Style>
+                                        <Style TargetType="Grid">
                                             <Style.Triggers>
-                                                <DataTrigger Binding="{Binding IsMarked}" Value="False">
-                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                <DataTrigger Binding="{Binding IsIgnored}" Value="True">
+                                                    <Setter Property="Opacity" Value="0.25" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
-                                    </TextBlock.Style>
-                                </TextBlock>
+                                    </Grid.Style>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
 
-                                <StackPanel Grid.Column="2">
-                                    <TextBlock Foreground="DarkOrange" Text="▶">
+                                    <TextBlock
+                                        Grid.Column="0"
+                                        Width="50"
+                                        Text="{Binding Index, ConverterParameter=D4, Converter={StaticResource ZeroPaddingConverter}}" />
+
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="4,0"
+                                        VerticalAlignment="Center"
+                                        Text="＊">
+
                                         <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
+                                            <Style BasedOn="{StaticResource {x:Type TextBlock}}" TargetType="TextBlock">
                                                 <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Playing}" Value="False">
+                                                    <DataTrigger Binding="{Binding IsMarked}" Value="False">
                                                         <Setter Property="Visibility" Value="Hidden" />
                                                     </DataTrigger>
                                                 </Style.Triggers>
                                             </Style>
                                         </TextBlock.Style>
                                     </TextBlock>
-                                    <Border Width="0" Margin="10,0" />
-                                </StackPanel>
 
-                                <TextBlock Grid.Column="3" Text="{Binding Name}" />
+                                    <StackPanel Grid.Column="2">
+                                        <TextBlock Foreground="DarkOrange" Text="▶">
+                                            <TextBlock.Style>
+                                                <Style TargetType="TextBlock">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Playing}" Value="False">
+                                                            <Setter Property="Visibility" Value="Hidden" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </TextBlock.Style>
+                                        </TextBlock>
+                                        <Border Width="0" Margin="10,0" />
+                                    </StackPanel>
 
-                            </Grid>
+                                    <TextBlock Grid.Column="3" Text="{Binding Name}" />
+
+                                </Grid>
+                            </ContentControl>
+
                         </DataTemplate>
                     </ListBox.ItemTemplate>
 
