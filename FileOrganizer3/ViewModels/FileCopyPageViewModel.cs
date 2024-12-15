@@ -90,11 +90,12 @@ namespace FileOrganizer3.ViewModels
         private void CopyFiles(IEnumerable<string> fileNames, IEnumerable<FileInfoWrapper> sourceFileInfos, string destinationPath)
         {
             // ファイル名がユニークでない場合はエラーが出る？
-            var fileInfos = sourceFileInfos.ToDictionary(f => f.Name);
+            var fileInfos = sourceFileInfos.ToDictionary(f => f.Name.ToLower());
 
             foreach (var fileName in fileNames)
             {
-                if (fileInfos.TryGetValue(fileName, out var fileInfoWrapper))
+                var n = fileName.ToLower();
+                if (fileInfos.TryGetValue(n, out var fileInfoWrapper))
                 {
                     fileInfoWrapper.CopyTo(destinationPath);
                 }
