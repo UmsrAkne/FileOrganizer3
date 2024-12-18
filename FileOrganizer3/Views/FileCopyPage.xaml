@@ -10,7 +10,12 @@
     Height="400"
     d:DataContext="{d:DesignInstance viewModels:FileCopyPageViewModel}"
     mc:Ignorable="d">
-    <Grid Margin="4">
+
+    <Page.InputBindings>
+        <KeyBinding Key="Escape" Command="{Binding CloseCommand}" />
+    </Page.InputBindings>
+
+    <Grid Margin="4" FocusManager.FocusedElement="{Binding ElementName=TextBox}">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
@@ -31,6 +36,7 @@
                 FontSize="{StaticResource BasicFontSize}"
                 Text="コピーするファイルを入力してください :" />
             <TextBox
+                x:Name="TextBox"
                 Grid.Row="1"
                 AcceptsReturn="True"
                 FontSize="{StaticResource BasicFontSize}"
