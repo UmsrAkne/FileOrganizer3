@@ -247,6 +247,11 @@ namespace FileOrganizer3.Behaviors
                 return;
             }
 
+            if (listBox.SelectedIndex < 0)
+            {
+                return;
+            }
+
             var item = listBox.Items[listBox.SelectedIndex];
 
             if (item == null)
