@@ -10,7 +10,7 @@
     xmlns:prism="http://prismlibrary.com/"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:viewModels="clr-namespace:FileOrganizer3.ViewModels"
-    Title="{Binding TextWrapper}"
+    Title="{Binding Title}"
     Width="800"
     Height="600"
     d:DataContext="{d:DesignInstance viewModels:DesignTimeViewModel}"

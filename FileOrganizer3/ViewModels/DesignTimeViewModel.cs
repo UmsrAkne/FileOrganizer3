@@ -19,7 +19,7 @@ namespace FileOrganizer3.ViewModels
                 new ObservableCollection<FileInfoWrapper>(DummyFileProvider.GetDummyFiles());
         }
 
-        public TextWrapper TextWrapper { get; } = new ();
+        public string Title { get; } = string.Empty;
 
         public FileContainer FileContainer { get => fileContainer; set => SetProperty(ref fileContainer, value); }
 
