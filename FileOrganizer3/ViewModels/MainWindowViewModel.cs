@@ -35,7 +35,7 @@ namespace FileOrganizer3.ViewModels
             FileContainer.FileStatusChangedEventHandler += OnFileContainerOnFileStatusChangedEventHandler;
         }
 
-        public TextWrapper TextWrapper { get; private set; } = new ();
+        public string Title { get; private set; } = string.Empty;
 
         public FileContainer FileContainer { get; set; }
 

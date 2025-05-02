@@ -5,7 +5,7 @@ namespace FileOrganizer3.ViewModels
 {
     public interface IMainWindowViewModel
     {
-        TextWrapper TextWrapper { get; }
+        string Title { get; }
 
         FileContainer FileContainer { get; set; }
 
