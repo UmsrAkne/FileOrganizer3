@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using FileOrganizer3.Models;
 using FileOrganizer3.Views;
 using Prism.Commands;
@@ -35,7 +36,7 @@ namespace FileOrganizer3.ViewModels
             FileContainer.FileStatusChangedEventHandler += OnFileContainerOnFileStatusChangedEventHandler;
         }
 
-        public string Title { get; private set; } = string.Empty;
+        public string Title { get; private set; } = GetAppNameWithVersion();
 
         public FileContainer FileContainer { get; set; }
 
@@ -108,6 +109,15 @@ namespace FileOrganizer3.ViewModels
         protected virtual void Dispose(bool disposing)
         {
             soundPlayer?.Dispose();
+        }
+
+        private static string GetAppNameWithVersion()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var infoVersion = assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>()?.InformationalVersion;
+            return !string.IsNullOrWhiteSpace(infoVersion)
+                ? $"File Organizer3 ver:{infoVersion}"
+                : "File Organizer3 (version unknown)";
         }
 
         [Conditional("DEBUG")]
