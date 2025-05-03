@@ -7,9 +7,12 @@ namespace FileOrganizer3.Models
     public class AppSettings
     {
         // ReSharper disable once ArrangeModifiersOrder
+        public static readonly double DefaultFontSize = 13.0;
+
+        // ReSharper disable once ArrangeModifiersOrder
         private static readonly string SettingsFilePath = "appSettings.json";
 
-        public double FontSize { get; set; }
+        public double FontSize { get; set; } = DefaultFontSize;
 
         public string PrefixText { get; set; }
 
