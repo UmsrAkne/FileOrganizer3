@@ -31,13 +31,13 @@ namespace FileOrganizer3.Models
                 }
                 else
                 {
-                    Console.WriteLine("設定ファイルが見つかりません。デフォルト設定を使用します。");
+                    Console.WriteLine("**** APP WARNING **** Config file not found. Using default settings.");
                     return new AppSettings();
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"設定の読み込み中にエラーが発生しました: {ex.Message}");
+                Console.WriteLine($"**** ERROR **** An error occurred while loading settings: {ex.Message}");
                 return new AppSettings();
             }
         }
@@ -49,11 +49,11 @@ namespace FileOrganizer3.Models
                 var json = JsonSerializer.Serialize(this, new JsonSerializerOptions { WriteIndented = true, });
 
                 File.WriteAllText(SettingsFilePath, json);
-                Console.WriteLine("設定が保存されました。");
+                Console.WriteLine("**** INFO **** Settings have been saved.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"設定の保存中にエラーが発生しました: {ex.Message}");
+                Console.WriteLine($"**** ERROR **** An error occurred while saving settings: {ex.Message}");
             }
         }
     }
