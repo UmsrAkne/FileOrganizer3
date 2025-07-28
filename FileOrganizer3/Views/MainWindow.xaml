@@ -58,6 +58,8 @@
 
                     <MenuItem Command="{Binding ShowFileCopyPageCommand}" Header="ファイルコピーダイアログを表示" />
 
+                    <MenuItem Command="{Binding FileContainer.ExportFileListCommand}" Header="ファイルリストを出力する" />
+
                 </MenuItem>
 
                 <MenuItem Header="マーク">
@@ -415,7 +417,7 @@
                                     </Trigger>
 
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="Border" Property="Background" Value="LightGray" />
+                                        <Setter TargetName="Border" Property="Background" Value="#E5E5E5" />
                                     </Trigger>
 
                                 </ControlTemplate.Triggers>

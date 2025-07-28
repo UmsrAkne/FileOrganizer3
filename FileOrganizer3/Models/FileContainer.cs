@@ -275,6 +275,21 @@ namespace FileOrganizer3.Models
             }
         });
 
+        public DelegateCommand ExportFileListCommand => new DelegateCommand(() =>
+        {
+            var result = string.Empty;
+            foreach (var fw in FileInfoWrappers)
+            {
+                var l = fw.IsIgnored ? "- " : "  ";
+                l += fw.IsMarked ? "* " : "  ";
+                l += $"{fw.Index:D5} {fw.Name} {fw.FullPath}{Environment.NewLine}";
+                result += l;
+            }
+
+            using var writer = new StreamWriter("file_list.txt");
+            writer.Write(result);
+        });
+
         public void AddFiles(IEnumerable<string> filePaths)
         {
             var fileInfos = filePaths.Select(p => new FileInfo(p));
