@@ -58,6 +58,8 @@
 
                     <MenuItem Command="{Binding ShowFileCopyPageCommand}" Header="ファイルコピーダイアログを表示" />
 
+                    <MenuItem Command="{Binding FileContainer.ExportFileListCommand}" Header="ファイルリストを出力する" />
+
                 </MenuItem>
 
                 <MenuItem Header="マーク">
